@@ -2,14 +2,14 @@
 <link href="<?php echo base_url("assets/my_css/index_page.css"); ?>" rel="stylesheet" >
 
 <script src="<?php echo base_url("assets/my_js/index_page.js"); ?>" ></script>
-<!--<link type="text/css" href="<?php //echo base_url();                                                                                                              ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
+<!--<link type="text/css" href="<?php //echo base_url();                                                                                                                  ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                              ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                  ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                              ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                  ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />	
@@ -42,7 +42,7 @@
                 <td class="menu_choice enable_choice" id="choice_1">
                     บันทึกผู้ป่วยใหม่
                 </td>
-                <td style="padding: 10px;vertical-align: top" rowspan="4">
+                <td style="padding: 10px;vertical-align: top;font-size: 15px" rowspan="4">
                     <!--Save Patient Data-->
                     <div style="display: block;"  id="choice1" class="scrollable">
                         <form name="patient_save" id="patient_save"  action="#" method="POST">
@@ -56,15 +56,19 @@
 
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <fieldset>
                                             <div class="row">
-                                                <div class="col-md-7" style="width:350px"><label class="label_1" >คำนำหน้านาม </label></div>
-                                                <div class="col-md-5"> <label>
-                                                        <select name="prefix" id="prefix" class="input-border">
+                                                <div class="col-md-12" ><label class="label_1" >คำนำหน้านาม  </label>
 
-                                                        </select>
+                                                    <select  name="prefix" id="prefix" class="input-border">
 
+                                                    </select>
+                                                    <label class="label_1" >เพศ  </label>
+                                                    <select  name="gender" id="gender" class="input-border">
+                                                        <option value="ชาย">ชาย</option>
+                                                        <option value="หญิง">หญิง</option>
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -456,6 +460,7 @@
                                         <th  style="">อาการ/โรค</th>
                                         <th style="width: 150px;"> ผลการประเมิน </th>
                                         <th style="">หมายเหตุ</th>
+                                        <th style="">Action</th>
 
                                     </tr>
                                 </thead>
@@ -509,6 +514,8 @@
 
 </div>
 
+
+
 <div id='load' class="loading style-2" style='display:none'><div class="loading-wheel"></div></div>
 
 <script type="text/javascript">
@@ -534,11 +541,12 @@
 
         $("#patient_edit input#rec_day_s").datepicker();
         $("#patient_edit input#birthday_s").datepicker();
-
-
+        
+        
+        
         $("#search_form input#day1").datepicker();
         $("#search_form input#day2").datepicker();
-
+        $("#form_sp_info input#date").datepicker();
 
         $.datepicker.regional['th'] = {
             changeMonth: true,
@@ -575,7 +583,7 @@
 
         });
 
-        
+
 
     });
 </script>

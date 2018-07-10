@@ -71,11 +71,15 @@ $route['sp_act_list']="api/Patient/sp_act_list";
 $route['evaluation_list']="api/Patient/evaluation_list";
 
 
+
 $route['get_sp_info_by_id']="api/Patient/get_sp_info_by_id";
 $route['get_sp_by_id']="api/Patient/get_sp_by_id";
 $route['get_sp_data']="api/Patient/get_sp_data";
+$route['get_single_sp_info']="api/Patient/get_single_sp_info";
 $route['sp_info_data_table']='api/Patient/sp_info_data_table';
 $route['search_person'] = 'api/Patient/search_person';
+$route['search_sp_info'] = 'api/Patient/search_sp_info';
+
 
 
 $route['sp_save']="api/Patient/sp_save";

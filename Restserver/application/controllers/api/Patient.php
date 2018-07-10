@@ -152,12 +152,12 @@ class Patient extends \Restserver\Libraries\REST_Controller {
                 $exp = "ไม่เคย";
             }
 
-            if ($r->gender == "male") {
-                $gender = "ชาย";
-            } else {
-                $gender = "หญิง";
-            }
-
+//            if ($r->gender == "male") {
+//                $gender = "ชาย";
+//            } else {
+//                $gender = "หญิง";
+//            }
+            $gender = $r->gender;
             $rec_day = $this->convert_date_be($r->rec_day);
 
             $button = " <button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-success' " .
@@ -250,13 +250,16 @@ class Patient extends \Restserver\Libraries\REST_Controller {
         if (!isset($sp['error'])) {
             foreach ($sp as $r) {
                 $date = $this->convert_date_be($r->date);
+                $button = " <button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-success' " .
+                        "onclick='edit_sp_info($r->sp_info_id)' >แก้ไข</button>";
                 $data[] = array(
                     "<span id='date_" . $r->sp_info_id . "' >" . $date . "</span>",
-                    "<span id='name_" . $r->person_id . "' >" . $r->prefix . " " . $r->fname . " " . $r->lname . "</span>",
+                    "<span id='name_" . $r->person_id . "' ><a href='#' onclick='manage_sp_act($r->person_id)' >" . $r->prefix . " " . $r->fname . " " . $r->lname . "</a></span>",
                     "<span id='sp_act" . $r->sp_info_id . "' >" . $r->sp_act_name . " </span>",
                     "<span id='symp_" . $r->sp_info_id . "' >" . $r->symp_name . " </span>",
                     "<span id='evaluation_" . $r->sp_info_id . "' >" . $r->evaluation . "</span>",
-                    "<span id='comment_" . $r->sp_info_id . "' >" . $r->comment . "</span>"
+                    "<span id='comment_" . $r->sp_info_id . "' >" . $r->comment . "</span>",
+                    $button
                 );
             }
         } else {
@@ -308,6 +311,8 @@ class Patient extends \Restserver\Libraries\REST_Controller {
         } else {
             $gender = "female";
         }
+
+        $gender = $this->post("gender");
 
         $rec_day = $this->convert_date_ad($this->post("rec_day"));
         $birthday = $this->convert_date_ad($this->post("birthday"));
@@ -513,14 +518,17 @@ class Patient extends \Restserver\Libraries\REST_Controller {
         $symptom = $this->post("symptom");
         $day1 = $this->post("day1");
         $day2 = $this->post("day2");
-        if($day1!=null&&$day1!=""){
-            $day1 = $this->convert_date_ad($day1); 
+
+
+
+        if ($day1 != null && $day1 != "") {
+            $day1 = $this->convert_date_ad($day1);
         }
-        
-        if($day2!=null&&$day2!=""){
+
+        if ($day2 != null && $day2 != "") {
             $day2 = $this->convert_date_ad($day2);
         }
-        
+
         $array = array(
             "id_card" => $id_card,
             "fname" => $fname,
@@ -537,8 +545,6 @@ class Patient extends \Restserver\Libraries\REST_Controller {
         );
 
         $result = $this->Patient_model->search_person($array, $option);
-
-
 
         $data = array();
 
@@ -560,21 +566,105 @@ class Patient extends \Restserver\Libraries\REST_Controller {
                 $rec_day = $this->convert_date_be($r->rec_day);
 
                 $button = " <button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-success' " .
-                        "onclick='edit_person_info($r->person_id)' >แก้ไข</button>"
+                        "onclick='edit_person_info($r->p_id)' >แก้ไข</button>"
                         . "&nbsp;<button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-primary' " .
-                        "onclick='manage_sp_act($r->person_id)' >อาการ/โรค</button>";
+                        "onclick='manage_sp_act($r->p_id)' >อาการ/โรค</button>";
                 $data[] = array(
-                    "<span id='rec_day_" . $r->person_id . "' >" . $rec_day . "</span>",
-                    "<span id='name_" . $r->person_id . "' >" . $r->prefix . " " . $r->fname . " " . $r->lname . "</span>",
-                    "<span id='gender_" . $r->person_id . "' >" . $gender . "</span>",
+                    "<span id='rec_day_" . $r->p_id . "' >" . $rec_day . "</span>",
+                    "<span id='name_" . $r->p_id . "' >" . $r->prefix . " " . $r->fname . " " . $r->lname . "</span>",
+                    "<span id='gender_" . $r->p_id . "' >" . $r->gender . "</span>",
                     "<span >" . $r->age . "</span>",
                     "<span  >" . $exp . "</span>",
                     $button
                 );
             }
-        }else{
+        } else {
             $data = array(
-              "result" => "ไม่พบข้อมูล"  
+                "result" => "ไม่พบข้อมูล"
+            );
+        }
+
+        $this->response($data, 200);
+    }
+
+    public function search_sp_info_post() {
+
+        $option = $this->post("option");
+        $id_card = $this->post("id_search");
+        $fname = $this->post("name_search");
+        $lname = $this->post("lastname_search");
+        $gender = $this->post("gender_s");
+        $age1 = $this->post("age_s1");
+        $age2 = $this->post("age_s2");
+        $weight1 = $this->post("weight_s1");
+        $weight2 = $this->post("weight_s2");
+        $sp_act = $this->post("sp_act");
+        $symptom = $this->post("symptom");
+        $day1 = $this->post("day1");
+        $day2 = $this->post("day2");
+
+
+
+        if ($day1 != null && $day1 != "") {
+            $day1 = $this->convert_date_ad($day1);
+        }
+
+        if ($day2 != null && $day2 != "") {
+            $day2 = $this->convert_date_ad($day2);
+        }
+
+        $array = array(
+            "id_card" => $id_card,
+            "fname" => $fname,
+            "lname" => $lname,
+            "gender" => $gender,
+            "age1" => $age1,
+            "age2" => $age2,
+            "weight1" => $weight1,
+            "weight2" => $weight2,
+            "sp_act" => $sp_act,
+            "symptom" => $symptom,
+            "day1" => $day1,
+            "day2" => $day2
+        );
+
+        $result = $this->Patient_model->search_sp_info($array, $option);
+
+        $data = array();
+
+        if (!isset($result['error'])) {
+            foreach ($result as $r) {
+
+                if ($r->exp == "1") {
+                    $exp = "เคย";
+                } else {
+                    $exp = "ไม่เคย";
+                }
+
+                if ($r->gender == "male") {
+                    $gender = "ชาย";
+                } else {
+                    $gender = "หญิง";
+                }
+
+                $rec_day = $this->convert_date_be($r->rec_day);
+
+                $button = " <button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-success' " .
+                        "onclick='edit_sp_info($r->sp_info_id)' >แก้ไข</button>";
+                $data[] = array(
+                    "<span id='date_" . $r->sp_info_id . "' >" . $date . "</span>",
+                    "<span id='name_" . $r->person_id . "' ><a href='#' onclick='manage_sp_act($r->person_id)' >" . $r->prefix . " " . $r->fname . " " . $r->lname . "</a></span>",
+                    "<span id='sp_act" . $r->sp_info_id . "' >" . $r->sp_act_name . " </span>",
+                    "<span id='symp_" . $r->sp_info_id . "' >" . $r->symp_name . " </span>",
+                    "<span id='evaluation_" . $r->sp_info_id . "' >" . $r->evaluation . "</span>",
+                    "<span id='comment_" . $r->sp_info_id . "' >" . $r->comment . "</span>",
+                    "<span id='comment_" . $r->sp_info_id . "' >" . $r->comment . "</span>",
+                    $button
+                );
+            }
+        } else {
+            $data = array(
+                "result" => "ไม่พบข้อมูล"
             );
         }
 
@@ -583,11 +673,40 @@ class Patient extends \Restserver\Libraries\REST_Controller {
         $this->response($data, 200);
     }
     
-    public function base_get(){
+    public function get_single_sp_info_post(){
         
-       echo $_SERVER['SCRIPT_FILENAME'];
+        $id = $this->post("id");
+        
+        $result = $this->Patient_model->get_single_sp_info($id);
+        $this->response($result,200);
+        
+    }
 
-        
+    public function base_get() {
+
+        echo $_SERVER['SCRIPT_FILENAME'];
+    }
+
+    public function guzz_post() {
+
+        $x = $this->post("x");
+        $c = $this->post("c");
+        if ($x == "123") {
+            $array = array(
+                "success" => true,
+                "x" => $x,
+                "c" => $c
+            );
+        } else {
+            $array = array(
+                "success" => alse,
+                "x" => $x,
+                "c" => $c
+            );
+        }
+
+        //$this->response($array,200);
+        echo json_encode($array);
     }
 
 }

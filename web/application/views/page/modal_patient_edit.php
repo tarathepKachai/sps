@@ -23,17 +23,17 @@
                             <div class="col-md-3">
                                 <fieldset>
                                     <div class="row">
-                                        <div class="col-md-7" style="width:350px"><label class="label_1" >คำนำหน้านาม </label></div>
-                                        <div class="col-md-5"> <label>
-                                                <select name="prefix" id="prefix_s" class="input-border">
-                                                    
-                                                </select>
-<!--                                                        <input  type="radio" class="radio_but" name="prefix" value="1" > ด.ญ. &nbsp; </label>
-                                            <label><input type="radio" class="radio_but" name="prefix" value="2" > ด.ช. &nbsp; </label>
-                                            <label><input type="radio" class="radio_but" name="prefix" value="3" > นาย &nbsp; </label>
-                                            <label><input type="radio" class="radio_but" name="prefix" value="4" > นาง &nbsp; </label>
-                                            <label><input type="radio" class="radio_but" name="prefix" value="5" > นางสาว &nbsp; </label>-->
-                                        </div>
+                                        <div class="col-md-12" ><label class="label_1" >คำนำหน้านาม  </label>
+
+                                                    <select style="margin-top:5px" name="prefix" id="prefix_s" class="input-border">
+
+                                                    </select>
+                                                    <label class="label_1" >เพศ  </label>
+                                                    <select  name="gender" id="gender_s" class="input-border">
+                                                    <option value="ชาย">ชาย</option>
+                                                    <option value="หญิง">หญิง</option>
+                                                    </select>
+                                                </div>
                                     </div>
 
                                 </fieldset>
@@ -93,19 +93,19 @@
                         <span class="error_report" id="birthday_error" ></span> &nbsp;
                         <label class="label_1">เลขที่บัตรประชาชน </label>
 
-                        <input type="text" name="txtID1" id="txtID1" class="input-card"  maxlength=1 onkeyup="keyup(this, event,'update')" onkeypress="return Numbers(event)"  /> - 
-                        <input type="text" name="txtID2" id="txtID2" class="input-card"  maxlength=1 onkeyup="keyup(this, event,'update')" onkeypress="return Numbers(event)" />  
-                        <input type="text" name="txtID3" id="txtID3" class="input-card"  maxlength=1 onkeyup="keyup(this, event,'update')" onkeypress="return Numbers(event)" /> 
-                        <input type="text" name="txtID4" id="txtID4" class="input-card"  maxlength=1 onkeyup="keyup(this, event,'update')" onkeypress="return Numbers(event)" />  
-                        <input type="text" name="txtID5" id="txtID5" class="input-card"  maxlength=1 onkeyup="keyup(this, event,'update')" onkeypress="return Numbers(event)" /> -
-                        <input type="text" name="txtID6" id="txtID6" class="input-card"  maxlength=1 onkeyup="keyup(this, event,'update')" onkeypress="return Numbers(event)" />  
-                        <input type="text" name="txtID7" id="txtID7" class="input-card"  maxlength=1 onkeyup="keyup(this, event,'update')" onkeypress="return Numbers(event)" />  
-                        <input type="text" name="txtID8" id="txtID8" class="input-card"  maxlength=1 onkeyup="keyup(this, event,'update')" onkeypress="return Numbers(event)" /> 
-                        <input type="text" name="txtID9" id="txtID9" class="input-card"  maxlength=1  onkeyup="keyup(this, event,'update')" onkeypress="return Numbers(event)"/>  
-                        <input type="text" name="txtID10" id="txtID10" class="input-card"  maxlength=1 onkeyup="keyup(this, event,'update')" onkeypress="return Numbers(event)" /> -
-                        <input type="text" name="txtID11" id="txtID11" class="input-card"  maxlength=1 onkeyup="keyup(this, event,'update')" onkeypress="return Numbers(event)" />  
-                        <input type="text" name="txtID12" id="txtID12" class="input-card"  maxlength=1 onkeyup="keyup(this, event,'update')" onkeypress="return Numbers(event)" /> -
-                        <input type="text" name="txtID13" id="txtID13" class="input-card"  maxlength=1 onkeyup="keyup(this, event,'update')" onkeypress="return Numbers(event)" /> 
+                        <input type="text" name="txtID1" id="txtID1" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'update')" onkeypress="return Numbers(event)"  /> - 
+                        <input type="text" name="txtID2" id="txtID2" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'update')" onkeypress="return Numbers(event)" />  
+                        <input type="text" name="txtID3" id="txtID3" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'update')" onkeypress="return Numbers(event)" /> 
+                        <input type="text" name="txtID4" id="txtID4" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'update')" onkeypress="return Numbers(event)" />  
+                        <input type="text" name="txtID5" id="txtID5" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'update')" onkeypress="return Numbers(event)" /> -
+                        <input type="text" name="txtID6" id="txtID6" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'update')" onkeypress="return Numbers(event)" />  
+                        <input type="text" name="txtID7" id="txtID7" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'update')" onkeypress="return Numbers(event)" />  
+                        <input type="text" name="txtID8" id="txtID8" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'update')" onkeypress="return Numbers(event)" /> 
+                        <input type="text" name="txtID9" id="txtID9" class="input-card"  maxlength=1  onkeyup="keyup(this, event, 'update')" onkeypress="return Numbers(event)"/>  
+                        <input type="text" name="txtID10" id="txtID10" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'update')" onkeypress="return Numbers(event)" /> -
+                        <input type="text" name="txtID11" id="txtID11" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'update')" onkeypress="return Numbers(event)" />  
+                        <input type="text" name="txtID12" id="txtID12" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'update')" onkeypress="return Numbers(event)" /> -
+                        <input type="text" name="txtID13" id="txtID13" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'update')" onkeypress="return Numbers(event)" /> 
 
                     </div>
                     <div class="col">
@@ -291,7 +291,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="close_modal()" data-dismiss="modal">Close</button>
-<!--                <button type="button" id="manage_btn"  class="btn btn-primary" onclick="manage_sp_act()">เพิ่ม อาการ/โรค</button>-->
+                <!--                <button type="button" id="manage_btn"  class="btn btn-primary" onclick="manage_sp_act()">เพิ่ม อาการ/โรค</button>-->
                 <button type="button" id="save_btn" class="btn btn-primary" onclick="update_sp()" >Save changes</button>
             </div>
         </div>

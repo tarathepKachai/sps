@@ -7,7 +7,7 @@ class Patient_model extends CI_Model {
     }
 
     public function get_prefix_list() {
-        //$query = $this->db->get('prefix');
+//$query = $this->db->get('prefix');
         $query = $this->db->get('prefix');
 
         return $query->result();
@@ -37,7 +37,7 @@ class Patient_model extends CI_Model {
         $this->db->select('*, YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) as age ');
         $this->db->from('person_info');
         $this->db->join('prefix', 'person_info.prefix = prefix.id');
-        // $this->db->where("person_id","13");
+        //$this->db->order_by("rec_day", "asc");
         $query = $this->db->get();
 
         return $query->result();
@@ -53,7 +53,7 @@ class Patient_model extends CI_Model {
     public function get_sp_by_id($id) {
         $this->db->select('*');
         $this->db->from('person_info');
-        //$this->db->join('prefix', 'person_info.prefix = prefix.id');
+//$this->db->join('prefix', 'person_info.prefix = prefix.id');
         $this->db->where("person_id", $id);
         $query = $this->db->get();
 
@@ -125,6 +125,18 @@ class Patient_model extends CI_Model {
             return array("error" => "0");
         }
     }
+    
+    public function get_single_sp_info($id){
+        
+        $where = array(
+          "sp_info_id" => $id  
+        );
+        $this->db->where($where);
+        $query = $this->db->get("sp_info");
+        
+        return $query->result();
+        
+    }
 
     public function get_total_sp() {
         $query = $this->db->select("COUNT(*) as num")->get("person_info");
@@ -183,7 +195,7 @@ class Patient_model extends CI_Model {
         $this->db->set($array);
         $this->db->where($where);
         $this->db->update("sp_info");
-        //$sql = $this->db->last_query();
+//$sql = $this->db->last_query();
         return array("success" => true);
     }
 
@@ -195,9 +207,9 @@ class Patient_model extends CI_Model {
         $this->db->set($array);
         $this->db->where($where);
         $this->db->update("sp_info");
-        //$sql = $this->db->last_query();
+//$sql = $this->db->last_query();
         return array("success" => true);
-        // "success"=>true
+// "success"=>true
     }
 
     public function save_comment($array, $sp_info_id) {
@@ -233,10 +245,10 @@ class Patient_model extends CI_Model {
     }
 
     public function search_person($array, $option) {
-        $this->db->select('*, YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) as age ');
-        $this->db->from("person_info");
-        $this->db->join('prefix', 'person_info.prefix = prefix.id');
-        $this->db->join('sp_info', 'person_info.person_id = sp_info.person_id');
+        $this->db->select('*, YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) as age, p.person_id as p_id');
+        $this->db->from("person_info p");
+        $this->db->join('prefix', 'p.prefix = prefix.id');
+        $this->db->join('sp_info', 'p.person_id = sp_info.person_id', 'left');
 
         if ($array['id_card'] != null && $array['id_card'] != "") {
             $this->db->where("id_card", $array['id_card']);
@@ -277,16 +289,100 @@ class Patient_model extends CI_Model {
             }
 
             if ($array['day1'] != "" && $array['day2'] != "" && $array['day1'] != null && $array['day2'] != null) {
-                $day2 = date('Y-m-d',strtotime($array['day2'] . "+1 days"));
+                $day2 = date('Y-m-d', strtotime($array['day2'] . "+1 days"));
                 $day1 = $array['day1'];
                 $this->db->where(" date between '$day1' and '$day2' ");
-                
+            }
+
+            if ($array['sp_act'] != "" && $array['sp_act'] != null && $array['sp_act'] != "0") {
+                $this->db->where("sp_act_id", $array['sp_act_id']);
+            }
+
+            if ($array['symptom'] != "" && $array['symptom'] != null && $array['symptom'] != "0") {
+                $this->db->where("symp_id", $array['symptom']);
             }
         } else {
             
         }
-        $this->db->group_by("id_card");
+        $this->db->group_by("p.person_id");
         $result = $this->db->get();
+        $sql = $this->db->last_query();
+
+        if ($result->num_rows() > 0) {
+            $data = $result->result();
+        } else {
+            $data = array(
+                "error" => "data's not found"
+            );
+        }
+
+        return $data;
+    }
+
+    public function search_sp_info($array, $option) {
+        $this->db->select('*, YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) as age');
+        $this->db->join('person_info', 'person_info.person_id = sp_info.person_id');
+        $this->db->join('prefix', 'person_info.prefix = prefix.id');
+        $this->db->join('symptom s', 'sp_info.symp_id = s.symp_id');
+        $this->db->join('sp_act', 'sp_info.sp_act_id = sp_act.sp_act_id');
+
+
+        if ($array['id_card'] != null && $array['id_card'] != "") {
+            $this->db->where("id_card", $array['id_card']);
+        }
+
+        if ($array['fname'] != null && $array['fname'] != "") {
+            $this->db->where("fname", $array['fname']);
+        }
+
+        if ($array['lname'] != null && $array['lname'] != "") {
+            $this->db->where("lname", $array['lname']);
+        }
+
+        if ($option == "2") {
+            if ($array['gender'] != 0) {
+                $this->db->where("gender", $array['gender']);
+            }
+            if (($array['age1'] != null && $array['age1'] != "") && ($array['age2'] != null && $array['age2'] != "")) {
+                $arr = array(
+                    "age >= " => $array['age1'],
+                    "age <= " => $array['age2']
+                );
+
+                $age1 = $array['age1'] - 1;
+                $age2 = $array['age2'];
+
+                $con = "birthday between date_add( curdate(), interval -$age2 year )
+                       and date_add( curdate(), interval -$age1 year )";
+                $this->db->where($con);
+            }
+            if ($array['weight1'] != "" && $array['weight2'] != "" && $array['weight1'] != null && $array['weight2'] != null) {
+                if ($array['weight1'] > $array['weight2']) {
+                    $temp = $array['weight1'];
+                    $array['weight1'] = $array['weight1'];
+                    $array['weight2'] = $temp;
+                }
+                $this->db->where("weight between $array[weight1] and $array[weight2]");
+            }
+
+            if ($array['day1'] != "" && $array['day2'] != "" && $array['day1'] != null && $array['day2'] != null) {
+                $day2 = date('Y-m-d', strtotime($array['day2'] . "+1 days"));
+                $day1 = $array['day1'];
+                $this->db->where(" date between '$day1' and '$day2' ");
+            }
+
+            if ($array['sp_act'] != "" && $array['sp_act'] != null && $array['sp_act'] != "0") {
+                $this->db->where("sp_act_id", $array['sp_act_id']);
+            }
+
+            if ($array['symptom'] != "" && $array['symptom'] != null && $array['symptom'] != "0") {
+                $this->db->where("s.symp_id", $array['symptom']);
+            }
+        } else {
+            
+        }
+       
+        $result = $this->db->get("sp_info");
         $sql = $this->db->last_query();
 
         if ($result->num_rows() > 0) {

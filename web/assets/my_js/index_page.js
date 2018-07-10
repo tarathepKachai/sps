@@ -15,6 +15,11 @@ if (mm < 10) {
 today = mm + '/' + dd + '/' + yyyy;
 
 $(document).ready(function () {
+
+
+
+
+
     $('.modal-switch-btn').click(function () {
         var prevPopup = $(this).attr("data-previouspopup-toggle");
         $(prevPopup).modal('show');
@@ -36,10 +41,11 @@ $(document).ready(function () {
     });
 
     //$('#example').DataTable();
-    var myTable = $('#search_table').DataTable({
+    var myTable = $('#search_table').dataTable({
         "pageLength": 5,
+
         "ajax": {
-            url: api_url+"api/Patient/sp_data_table",
+            url: api_url + "api/Patient/sp_data_table",
             type: 'POST',
             "dataSrc": function (json) {
                 //Make your callback here.
@@ -48,6 +54,10 @@ $(document).ready(function () {
                 return json.data;
             }
         },
+        "order": [[0, "desc"]],
+        "columnDefs": [
+            {type: 'extract-date', targets: [0]}
+        ],
         dom: 'Bflrtip',
         buttons: {
             buttons: [{
@@ -81,7 +91,10 @@ $(document).ready(function () {
                 console.log(dataReport);
                 return json.data;
             }
-        },
+        }, "order": [[0, "desc"]],
+        "columnDefs": [
+            {type: 'extract-date', targets: [0]}
+        ],
         dom: 'Bflrtip',
         buttons: {
             buttons: [{
@@ -93,8 +106,6 @@ $(document).ready(function () {
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
                         //$('row c[r^="C"]', sheet).attr('s', '2');
-
-
                     }
                 }, {
                     extend: 'colvis',
@@ -102,6 +113,8 @@ $(document).ready(function () {
                 }
             ]}
     });
+
+
 
 //    $('#search_table').on('click', 'tbody tr', function () {
 //        myTable.row(this).edit();
@@ -393,12 +406,8 @@ $(document).ready(function () {
 
 
     $("#test").submit(function (e) {
-        console.log("aa");
+//        console.log("aa");
         e.preventDefault();
-
-
-
-
     });
 
 //    $("#search_option").change(function () {
@@ -525,10 +534,10 @@ function submit() {
 
     } else {
 
-        //save_data();
+        save_data();
 
     }
-    save_data();
+    //save_data();
 
 
 }
@@ -542,16 +551,18 @@ function check_submit() {
                 var id_input = el.id;
 
                 if (id_input !== "exp_1_detail" && id_input !== "exp_2_detail" && id_input !== "exp_3_detail" && id_input !== "exp_4_detail" && id_input !== "road" && id_input !== "fax" && id_input !== "scar"
-                        && id_input !== "line_id" && id_input !== "email") {
+                        && id_input !== "line_id" && id_input !== "email" && id_input !== "edu_detail") {
                     if ((el.value === null || el.value === '')) {
                         suc = "0";
                         console.log(el.id);
                     } else {
                         if (id_input === "edu_detail") {
                             var value = $("#patient_save select#edu").val();
-                            if ((el.value === null || el.value === '')) {
-                                suc = "0";
-                                console.log(el.id);
+                            if (value === "5") {
+                                if ((el.value === null || el.value === '')) {
+                                    suc = "0";
+                                    console.log(el.id);
+                                }
                             }
                         }
                     }
@@ -581,7 +592,7 @@ function check_submit() {
 
 
 function search_submit() {
-
+    var s_opt = $("#search_option").val();
 
     $.ajax({
         url: api_url + "search_person",
@@ -600,8 +611,25 @@ function search_submit() {
 
             if (!data.result) {
                 $('#search_table').dataTable().fnAddData(data);
+
             } else {
                 console.log("not found");
+                setTimeout(function () {
+                    $.confirm({
+
+                        title: 'แจ้งเตือน',
+                        content: 'ไม่พบข้อมูล !',
+                        type: 'red',
+                        typeAnimated: true,
+                        buttons: {
+                            ok: {
+                                btnClass: 'btn-red',
+
+                            }
+
+                        }
+                    });
+                }, 400)
             }
 
             setTimeout(function () {
@@ -610,36 +638,52 @@ function search_submit() {
 
         }
     });
-    
-    
-    
-//    $.ajax({
-//        url: api_url + "search_sp_info",
-//        type: "POST",
-//        data: $("#search_form").serialize(),
-//        success: function (data) {
-//
-//            console.log(data.length);
-//            console.log(data);
-//            var len = data.length;
-//            var arr = [];
-////            $('#search_table').DataTable();
-//            //$("#load").css("display", "block");
-//
-//            $('#search_table2').dataTable().fnClearTable();
-//
-//            if (!data.result) {
-//                $('#search_table2').dataTable().fnAddData(data);
-//            } else {
-//                console.log("not found");
-//            }
-//
-//            setTimeout(function () {
-//                $("#load").css("display", "none");
-//            }, 300);
-//
-//        }
-//    });
+
+    $.ajax({
+        url: api_url + "search_sp_info",
+        type: "POST",
+        data: $("#search_form").serialize(),
+        success: function (data) {
+
+            console.log(data.length);
+            console.log(data);
+            var len = data.length;
+            var arr = [];
+//            $('#search_table').DataTable();
+            $("#load").css("display", "block");
+
+            $('#search_table2').dataTable().fnClearTable();
+
+            if (!data.result) {
+                $('#search_table2').dataTable().fnAddData(data);
+
+            } else {
+                console.log("not found");
+                setTimeout(function () {
+                    $.confirm({
+
+                        title: 'แจ้งเตือน',
+                        content: 'ไม่พบข้อมูล !',
+                        type: 'red',
+                        typeAnimated: true,
+                        buttons: {
+                            ok: {
+                                btnClass: 'btn-red',
+
+                            }
+
+                        }
+                    });
+                }, 400)
+            }
+
+            setTimeout(function () {
+                $("#load").css("display", "none");
+            }, 300);
+
+        }
+    });
+
 }
 
 function test_t() {
@@ -874,6 +918,8 @@ function edit_person_info(id) {
 
                     } else if (idx === "edu_detail") {
                         $("#edu_detail_s").val(obj);
+                    } else if (idx === "gender") {
+                        $('#' + idx + '_s option[value="' + obj + '"]').attr("selected", true);
                     } else {
                         $("#patient_edit input[name=" + idx + "]").val(obj);
                     }
@@ -891,6 +937,23 @@ function edit_person_info(id) {
 
 }
 
+function edit_sp_info(id) {
+    
+    $("#form_sp_info input#date").datepicker("setDate", new Date());
+    $("#sp_info_modal").modal('show');
+    
+    $.ajax({
+        url: api_url + "get_single_sp_info",
+        type: "post",
+        data: {id:id},
+        success: function (data) {
+            console.log(data);
+        }
+    });
+    
+
+}
+
 
 function update_sp() {
 //console.log($("#patient_edit").serialize());
@@ -905,7 +968,6 @@ function update_sp() {
                 title: 'แจ้งเตือน',
                 content: 'แก้ไขข้อมูลสำเร็จ',
             });
-
         }
     });
 
@@ -913,6 +975,10 @@ function update_sp() {
 
 function close_modal() {
     $("#patient_edit")[0].reset();
+}
+
+function close_modal_sp() {
+    $("#form_sp_info")[0].reset();
 }
 
 function get_form_option() {
@@ -997,11 +1063,11 @@ function convert_date_ad(date) {
 function manage_sp_act(id) {
 //    $("#edit_modal").modal("hide");
 //    $("#sp_modal").modal("show");
-var w =screen.availWidth;
-    w = w-100;
+    var w = screen.availWidth;
+    w = w - 100;
     var h = screen.availHeight;
-    h = h-100;
-    window.open(client_url + "sp/get_sp_info/" + id, 'window name', "width="+w+",height="+h+",left=30,top=30,resizable=yes,scrollbars=yes");
+    h = h - 100;
+    window.open(client_url + "sp/get_sp_info/" + id, 'window name', "width=" + w + ",height=" + h + ",left=30,top=30,resizable=yes,scrollbars=yes");
 }
 
 function back_to_edit() {

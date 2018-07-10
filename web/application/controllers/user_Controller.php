@@ -65,7 +65,7 @@ class user_Controller extends CI_Controller {
         # guzzle client define
         $client = new \GuzzleHttp\Client(); //['http_errors' => false]
         #This url define speific Target for guzzle
-        $url = 'http://localhost/st_patient/Restserver/patient/save';
+        $url = 'http://localhost/sps/Restserver/patient/save';
 
         #guzzle
         $x = $this->input->post("username");
@@ -88,27 +88,27 @@ class user_Controller extends CI_Controller {
 //            echo $response->getBody();
     }
 
-    public function get_prefix() {
-        header("Access-Control-Allow-Origin: *");
-        header("Access-Control-Allow-Headers: *");
-        header('Content-Type: application/json');
-
-        # guzzle client define
-        $client = new \GuzzleHttp\Client(); //['http_errors' => false]
-        #This url define speific Target for guzzle
-        $url = 'http://localhost/st_patient/Restserver/get_prefix';
-
-
-
-        $response = $client->request('GET', $url);
-        $data = $response->getBody();
-//            #guzzle repose for future use
-////            echo $response->getStatusCode(); // 200
-////            echo $response->getReasonPhrase(); // OK
-////            echo $response->getProtocolVersion(); // 1.1
-//            echo $response->getBody();
-        echo json_encode($data);
-    }
+//    public function get_prefix() {
+//        header("Access-Control-Allow-Origin: *");
+//        header("Access-Control-Allow-Headers: *");
+//        header('Content-Type: application/json');
+//
+//        # guzzle client define
+//        $client = new \GuzzleHttp\Client(); //['http_errors' => false]
+//        #This url define speific Target for guzzle
+//        $url = 'http://localhost/sps/Restserver/get_prefix';
+//
+//
+//
+//        $response = $client->request('GET', $url);
+//        $data = $response->getBody();
+////            #guzzle repose for future use
+//////            echo $response->getStatusCode(); // 200
+//////            echo $response->getReasonPhrase(); // OK
+//////            echo $response->getProtocolVersion(); // 1.1
+////            echo $response->getBody();
+//        echo json_encode($data);
+//    }
 
     public function get_sp_info($id) {
 
@@ -117,7 +117,7 @@ class user_Controller extends CI_Controller {
 
 //        $client = new \GuzzleHttp\Client(); //['http_errors' => false]
 //        #This url define speific Target for guzzle
-//        $url = 'http://localhost/st_patient/Restserver/get_sp_info_by_id';
+//        $url = 'http://localhost/sps/Restserver/get_sp_info_by_id';
 //
 //        #guzzle
 //        
