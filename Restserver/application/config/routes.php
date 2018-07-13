@@ -70,8 +70,6 @@ $route['symptom_list']="api/Patient/symptom_list";
 $route['sp_act_list']="api/Patient/sp_act_list";
 $route['evaluation_list']="api/Patient/evaluation_list";
 
-
-
 $route['get_sp_info_by_id']="api/Patient/get_sp_info_by_id";
 $route['get_sp_by_id']="api/Patient/get_sp_by_id";
 $route['get_sp_data']="api/Patient/get_sp_data";
@@ -80,8 +78,6 @@ $route['sp_info_data_table']='api/Patient/sp_info_data_table';
 $route['search_person'] = 'api/Patient/search_person';
 $route['search_sp_info'] = 'api/Patient/search_sp_info';
 
-
-
 $route['sp_save']="api/Patient/sp_save";
 $route['save_sp_info']="api/Patient/save_sp_info";
 $route['update_evaluation']="api/Patient/update_evaluation";
@@ -89,3 +85,5 @@ $route['update_symptom']="api/Patient/update_symptom";
 $route['update_sp_act']="api/Patient/update_sp_act";
 $route['save_comment']="api/Patient/save_comment";
 $route['delete_sp_info']='api/Patient/delete_sp_info';
+$route['update_sp_info']='api/Patient/update_sp_info';
+

@@ -14,15 +14,16 @@
                     <div class="col">
                         <label class="label_1">วันที่ </label> &nbsp;<input type="text" name="date" id="date" class="rec_day">&nbsp;
                         <!--                        <label class="label_1">การกระทำ</label> -->
-                        <select id="sp_act" name="sp_act" class="input-border" style="width: 200px">
+                        <input type="hidden" name="sp_info_id" id="sp_info_id_m" >
+                        <select id="sp_act_m" name="sp_act" class="input-border" style="width: 200px">
                             <option value="0">------เลือการกระทำ--------</option>
                         </select>
-                        <select id="symptom" name="symptom" class="input-border" style="width: 200px">
+                        <select id="symptom_m" name="symptom" class="input-border" style="width: 200px">
                             <option value="0">------เลือกอาการ/โรค--------</option>
                         </select>
                         &nbsp;
                         <label class="label_1">การประเมิน</label> 
-                        <select id="evaluation" name="evaluation" class="input-border" >
+                        <select id="evaluation_m" name="evaluation" class="input-border" >
                             <option value="" >--เลือก--</option>
                         </select>
 
@@ -33,7 +34,7 @@
 
 
                         <label class="label_1">หมายเหตุ</label>
-                        <textarea type="text" class="form-control" style="border-color: black;" id="comment" name="comment" ></textarea>
+                        <textarea type="text" class="form-control" style="border-color: black;" id="comment_m" name="comment" ></textarea>
                     </div>
 
                     <!--/////////////////////////////////////////////////  FORM ///////////////////////////////////////////////////////////////-->

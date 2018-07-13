@@ -25,15 +25,15 @@
                                     <div class="row">
                                         <div class="col-md-12" ><label class="label_1" >คำนำหน้านาม  </label>
 
-                                                    <select style="margin-top:5px" name="prefix" id="prefix_s" class="input-border">
+                                            <select style="margin-top:5px" name="prefix" id="prefix_s" class="input-border">
 
-                                                    </select>
-                                                    <label class="label_1" >เพศ  </label>
-                                                    <select  name="gender" id="gender_s" class="input-border">
-                                                    <option value="ชาย">ชาย</option>
-                                                    <option value="หญิง">หญิง</option>
-                                                    </select>
-                                                </div>
+                                            </select>
+                                            <label class="label_1" >เพศ  </label>
+                                            <select  name="gender" id="gender_s" class="input-border">
+                                                <option value="ชาย">ชาย</option>
+                                                <option value="หญิง">หญิง</option>
+                                            </select>
+                                        </div>
                                     </div>
 
                                 </fieldset>
@@ -217,14 +217,43 @@
                         <label class="label_1">ประสบการณ์การเป็นผู้ป่วยจำลอง (SP)</label>
                         <span class="error_report" id="exp_error" ></span>
                         <br>
-                        <label class="label_1"><input type="radio" class="radio_but" style="margin-left:20px;" id="exp01" name="exp"  value="1" /> เคย </label> 
-                        <label ><input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_1" id="exp_1" value="1" /> ซักประวัติอาการ </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_1_detail" id="exp_1_detail">
-                        <label ><input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_2" id="exp_2" value="2"/> ให้คำแนะนำอาการ/โรค </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_2_detail" id="exp_2_detail">
-                        <br>
-                        <label ><input type="checkbox" class="radio_but" style="margin-left:78px;"  name="exp_3" id="exp_3" value="3"/> ตรวจร่างกายอาการ </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_3_detail" id="exp_3_detail">
-                        <label ><input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_4" id="exp_4" value="4"/> การทำหัตถการ </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_4_detail" id="exp_4_detail">
-                        <br>
-                        <label class="label_1"><input type="radio" class="radio_but" style="margin-left:20px;" id="exp02" name="exp" value="2" /> ไม่เคย </label> 
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label class="label_1"><input type="radio" disabled class="radio_but" style="margin-left:20px;" id="exp01" name="exp"  value="1" /> เคย </label> 
+
+                                <br>
+
+                            </div>
+                            <div class="col-md-11" id="exp_d">
+<!--                                <label >
+                                    <input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_1" id="exp_1" value="1" />
+                                    ซักประวัติอาการ </label>  
+                            <input type="text" class="name_medium" style="width: 250px"  name="exp_1_detail" id="exp_1_detail">
+                                <textarea  class="form-control" readonly  name="exp_1_detail" id="exp_1_detail"> </textarea>
+                                <label >
+                                    <input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_2" id="exp_2" value="2"/> 
+                                    ให้คำแนะนำอาการ/โรค </label>  
+                                <input type="text" class="name_medium" style="width: 250px"  name="exp_2_detail" id="exp_2_detail">
+                                <textarea  class="form-control"  readonly name="exp_2_detail" id="exp_2_detail"> </textarea>
+
+                                <label >
+                                    <input type="checkbox" class="radio_but" style="margin-left:78px;"  name="exp_3" id="exp_3" value="3"/>
+                                    ตรวจร่างกายอาการ </label>  
+                                <input type="text" class="name_medium" style="width: 250px"  name="exp_3_detail" id="exp_3_detail">
+                                <textarea class="form-control"  readonly name="exp_3_detail" id="exp_3_detail"> </textarea>
+                                <label >
+                                    <input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_4" id="exp_4" value="4"/> 
+                                    การทำหัตถการ </label>  
+                                <input type="text" class="name_medium" style="width: 250px"  name="exp_4_detail" id="exp_4_detail">
+                                <textarea class="form-control" style="background-color: white" readonly  name="exp_4_detail" id="exp_4_detail"> </textarea>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="label_1"><input type="radio" class="radio_but" style="margin-left:20px;" disabled id="exp02" name="exp" value="2" /> ไม่เคย </label> 
+                            </div>
+                        </div>
+
                     </div>
 
 
@@ -290,7 +319,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="close_modal()" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" onclick="close_modal()" data-dismiss="modal" >Close</button>
                 <!--                <button type="button" id="manage_btn"  class="btn btn-primary" onclick="manage_sp_act()">เพิ่ม อาการ/โรค</button>-->
                 <button type="button" id="save_btn" class="btn btn-primary" onclick="update_sp()" >Save changes</button>
             </div>

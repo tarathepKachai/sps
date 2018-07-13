@@ -2,14 +2,14 @@
 <link href="<?php echo base_url("assets/my_css/index_page.css"); ?>" rel="stylesheet" >
 
 <script src="<?php echo base_url("assets/my_js/index_page.js"); ?>" ></script>
-<!--<link type="text/css" href="<?php //echo base_url();                                                                                                                  ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
+<!--<link type="text/css" href="<?php //echo base_url();                                                                                                                      ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                  ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                      ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                  ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                      ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />	
@@ -249,19 +249,19 @@
                             </div>
 <!--                            &nbsp; <input type="text" name="degree" id="degree" class="name_medium" style="width: 400px;margin-top:7px;">-->
 
-                            <div class="col">
-                                <label class="label_1">ประสบการณ์การเป็นผู้ป่วยจำลอง (SP)</label>
-                                <span class="error_report" id="exp_error" ></span>
-                                <br>
-                                <label class="label_1"><input type="radio" class="radio_but" style="margin-left:20px;" name="exp"  value="1" /> เคย </label> 
-                                <label ><input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_1" id="exp_1" value="1" /> ซักประวัติอาการ </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_1_detail" id="exp_1_detail">
-                                <label ><input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_2" id="exp_2" value="2"/> ให้คำแนะนำอาการ/โรค </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_2_detail" id="exp_2_detail">
-                                <br>
-                                <label ><input type="checkbox" class="radio_but" style="margin-left:78px;"  name="exp_3" id="exp_3" value="3"/> ตรวจร่างกายอาการ </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_3_detail" id="exp_3_detail">
-                                <label ><input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_4" id="exp_4" value="4"/> การทำหัตถการ </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_4_detail" id="exp_4_detail">
-                                <br>
-                                <label class="label_1"><input type="radio" class="radio_but" style="margin-left:20px;" name="exp" value="2" /> ไม่เคย </label> 
-                            </div>
+                            <!--                            <div class="col">
+                                                            <label class="label_1">ประสบการณ์การเป็นผู้ป่วยจำลอง (SP)</label>
+                                                            <span class="error_report" id="exp_error" ></span>
+                                                            <br>
+                                                            <label class="label_1"><input type="radio" class="radio_but" style="margin-left:20px;" name="exp"  value="1" /> เคย </label> 
+                                                            <label ><input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_1" id="exp_1" value="1" /> ซักประวัติอาการ </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_1_detail" id="exp_1_detail">
+                                                            <label ><input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_2" id="exp_2" value="2"/> ให้คำแนะนำอาการ/โรค </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_2_detail" id="exp_2_detail">
+                                                            <br>
+                                                            <label ><input type="checkbox" class="radio_but" style="margin-left:78px;"  name="exp_3" id="exp_3" value="3"/> ตรวจร่างกายอาการ </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_3_detail" id="exp_3_detail">
+                                                            <label ><input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_4" id="exp_4" value="4"/> การทำหัตถการ </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_4_detail" id="exp_4_detail">
+                                                            <br>
+                                                            <label class="label_1"><input type="radio" class="radio_but" style="margin-left:20px;" name="exp" value="2" /> ไม่เคย </label> 
+                                                        </div>-->
 
 
                             <hr>
@@ -353,8 +353,8 @@
                                         <label> เพศ </label>
                                         <select id="gender_s" name="gender_s" class="input-border">
                                             <option value="0" >--เลือก--</option>
-                                            <option value="male">ชาย</option>
-                                            <option value="female">หญิง</option>
+                                            <option value="ชาย">ชาย</option>
+                                            <option value="หญิง">หญิง</option>
                                         </select>
                                         &nbsp; &nbsp; อายุ (ปี)&nbsp; <input type="text" name="age_s1" id="age_s1" class="text_short" > 
                                         ถึง <input type="text" name="age_s2" id="age_s2" class="text_short" >
@@ -482,11 +482,48 @@
                         <!------------------------   FORM SEARCH   ------------------------------------------***************************************-->
                     </div>
                     <div style="display: none;" id="choice3">
-                        <form id="test" name="test" method="POST" enctype="multipart/form-data">
-                            <input type="text"  name="username" id="username"  >
-                            <input type="submit" value="Submit">
+                        <form id="form_save_list" >
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <select id="sp_act_list" name="sp_act_list" class="form-control input-border" >
+                                            <option value="0">เลือกการกระทำ</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select id="symptom_list" name="symptom_list" class="form-control input-border" >
+                                            <option value="0">เลือกอาการ/โรค</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <?php
+                                    for ($i = 0; $i < 16; $i++) {
+                                        ?>
+                                        <div class="col-md-12">
+                                            <div>
+                                                <input type="text" class="rec_day input-border" style="margin-top: 5px" name="date_<?php echo $i + 1; ?>" id="date_<?php echo $i + 1; ?>" >
+                                                <select name="person_<?php echo $i+1; ?>" id="person_<?php echo $i+1; ?>" >
+                                                    <option value="0">เลือกชื่อผู้ป่วยจำลอง</option>
+                                                </select>
+                                            </div>
+                                            
+                                        </div>
+                                    
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+
+                            <div class="col">
+
+                            </div>
+
                         </form>
-                        <button onclick="test_t()"  id="butt">ดูรายงาน</button>
+                        <div style="text-align:center;margin-top: 10px">
+                            <button type="button" onclick="save_list()" id="butt">ดูรายงาน</button>
+                        </div>
                     </div>
 
 
@@ -541,9 +578,9 @@
 
         $("#patient_edit input#rec_day_s").datepicker();
         $("#patient_edit input#birthday_s").datepicker();
-        
-        
-        
+
+
+
         $("#search_form input#day1").datepicker();
         $("#search_form input#day2").datepicker();
         $("#form_sp_info input#date").datepicker();

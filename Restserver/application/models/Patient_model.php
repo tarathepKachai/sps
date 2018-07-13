@@ -71,12 +71,14 @@ class Patient_model extends CI_Model {
     }
 
     public function get_symptom_list() {
+         $this->db->order_by("symp_name", "asc");
         $query = $this->db->get("symptom");
 
         return $query->result();
     }
 
     public function get_sp_act_list() {
+        $this->db->order_by("sp_act_name", "asc");
         $query = $this->db->get("sp_act");
 
         return $query->result();
@@ -125,17 +127,16 @@ class Patient_model extends CI_Model {
             return array("error" => "0");
         }
     }
-    
-    public function get_single_sp_info($id){
-        
+
+    public function get_single_sp_info($id) {
+
         $where = array(
-          "sp_info_id" => $id  
+            "sp_info_id" => $id
         );
         $this->db->where($where);
         $query = $this->db->get("sp_info");
-        
+
         return $query->result();
-        
     }
 
     public function get_total_sp() {
@@ -171,6 +172,10 @@ class Patient_model extends CI_Model {
         $result = array(
             "success" => true
         );
+
+        $this->db->set("exp", "1");
+        $this->db->where("person_id", $array['person_id']);
+        $this->db->update("person_info");
 
         return $result;
     }
@@ -223,7 +228,7 @@ class Patient_model extends CI_Model {
         $this->db->update("sp_info");
     }
 
-    public function delete_sp_info($sp_info_id) {
+    public function delete_sp_info($sp_info_id, $person_id) {
 
         $where = array(
             "sp_info_id" => $sp_info_id
@@ -231,6 +236,16 @@ class Patient_model extends CI_Model {
 
         $this->db->where($where);
         $result = $this->db->delete("sp_info");
+
+        $this->db->where("person_id", $person_id);
+        $query = $this->db->get("sp_info");
+
+        if ($query->num_rows() == 0) {
+            $this->db->set("exp", "0");
+            $this->db->where("person_id", $person_id);
+            $this->db->update("person_info");
+        }
+
         return $result;
     }
 
@@ -263,7 +278,7 @@ class Patient_model extends CI_Model {
         }
 
         if ($option == "2") {
-            if ($array['gender'] != 0) {
+            if ($array['gender'] != "0") {
                 $this->db->where("gender", $array['gender']);
             }
             if (($array['age1'] != null && $array['age1'] != "") && ($array['age2'] != null && $array['age2'] != "")) {
@@ -295,7 +310,7 @@ class Patient_model extends CI_Model {
             }
 
             if ($array['sp_act'] != "" && $array['sp_act'] != null && $array['sp_act'] != "0") {
-                $this->db->where("sp_act_id", $array['sp_act_id']);
+                $this->db->where("sp_act_id", $array['sp_act']);
             }
 
             if ($array['symptom'] != "" && $array['symptom'] != null && $array['symptom'] != "0") {
@@ -321,6 +336,7 @@ class Patient_model extends CI_Model {
 
     public function search_sp_info($array, $option) {
         $this->db->select('*, YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) as age');
+
         $this->db->join('person_info', 'person_info.person_id = sp_info.person_id');
         $this->db->join('prefix', 'person_info.prefix = prefix.id');
         $this->db->join('symptom s', 'sp_info.symp_id = s.symp_id');
@@ -340,7 +356,7 @@ class Patient_model extends CI_Model {
         }
 
         if ($option == "2") {
-            if ($array['gender'] != 0) {
+            if ($array['gender'] != "0") {
                 $this->db->where("gender", $array['gender']);
             }
             if (($array['age1'] != null && $array['age1'] != "") && ($array['age2'] != null && $array['age2'] != "")) {
@@ -372,7 +388,7 @@ class Patient_model extends CI_Model {
             }
 
             if ($array['sp_act'] != "" && $array['sp_act'] != null && $array['sp_act'] != "0") {
-                $this->db->where("sp_act_id", $array['sp_act_id']);
+                $this->db->where("sp_info.sp_act_id", $array['sp_act']);
             }
 
             if ($array['symptom'] != "" && $array['symptom'] != null && $array['symptom'] != "0") {
@@ -381,7 +397,7 @@ class Patient_model extends CI_Model {
         } else {
             
         }
-       
+
         $result = $this->db->get("sp_info");
         $sql = $this->db->last_query();
 

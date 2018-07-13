@@ -236,6 +236,23 @@ function convert_date_be($date) {
 
             }
         });
+        
+        
+        $.ajax({
+        url: api_url + "sp_act_list",
+        type: "get",
+        success: function (data) {
+            var txt = "";
+     
+
+            $.each(data, function (idx, obj) {
+                txt += '<label >' + obj.sp_act_name + '</label>';
+                txt += '<textarea  class="form-control" readonly style="background-color:white" name="exp_' + obj.sp_act_id + '_detail" id="exp_' + obj.sp_act_id + '_detail"></textarea> ';
+            });
+
+            $("#exp_d").append(txt);
+        }
+    });
 
         $.ajax({
             url: api_url + "get_sp_info_by_id",
@@ -272,7 +289,7 @@ function convert_date_be($date) {
                         //str += obj.comment;
                         str += "</td>";
                         str += "<td>";
-                        str += "<button class='btn btn-danger' style='' onClick='delete_sp_info(this.id)' id='" + obj.sp_info_id + "' > ลบ </button>";
+                        str += "<button class='btn btn-danger' style='' onClick='delete_sp_info(this.id,"+obj.person_id+")' id='" + obj.sp_info_id + "' > ลบ </button>";
                         str += "</td>";
 
                         $("#sp_info_data").append(str);
