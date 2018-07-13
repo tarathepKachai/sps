@@ -25,8 +25,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/DataTables/datatables.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/DataTables/sort_date.js"></script>
         <script>
-            var client_url = "http://" + window.location.hostname + "/sps/web/";
-            var api_url = "http://" + window.location.hostname + "/sps/Restserver/";
+            var client_url = "http://" + window.location.hostname + "/sps/web/index.php/";
+            var api_url = "http://" + window.location.hostname + "/sps/Restserver/index.php/";
         </script>
 
     </head>
