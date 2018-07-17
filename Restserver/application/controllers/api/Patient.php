@@ -76,11 +76,9 @@ class Patient extends CI_Controller {
     }
 
     public function sp_list() {
-        header("Access-Control-Allow-Origin: *");
-        header("Access-Control-Allow-Headers: *");
-        header('Access-Control-Allow-Methods: POST');
+
         header('Content-Type: application/json');
-        $data = $this->Patient_model->get_sp_list();
+        $data = $this->Patient_model->get_sp_list("option");
 
         echo json_encode($data);
     }
@@ -149,7 +147,7 @@ class Patient extends CI_Controller {
         $length = intval($this->input->get("length"));
 
 
-        $sp = $this->Patient_model->get_sp_list();
+        $sp = $this->Patient_model->get_sp_list("date");
 
         $data = array();
 
@@ -244,8 +242,6 @@ class Patient extends CI_Controller {
         exit();
     }
 
-    
-
     public function sp_save() {
         header('Content-Type: application/json');
         $id_card = "";
@@ -328,11 +324,11 @@ class Patient extends CI_Controller {
             $result = $this->Patient_model->patient_update_data($array, $person_id);
         }
 
-        echo json_encode($array);
+        echo json_encode($result);
     }
 
     public function convert_date_ad($date) {
-        
+
         //$date = $this->input->post("date");
         $ex_date = explode("/", $date);
 
@@ -478,9 +474,8 @@ class Patient extends CI_Controller {
         $sp_info_id = $this->input->post("sp_info_id");
         $person_id = $this->input->post("person_id");
         $result = $this->Patient_model->delete_sp_info($sp_info_id, $person_id);
-        
+
         echo json_encode($array);
-        
     }
 
     public function search_person() {
@@ -660,6 +655,55 @@ class Patient extends CI_Controller {
         echo json_encode($result);
     }
 
+    public function save_sp_info_list() {
+        header('Content-Type: application/json');
+        $sp_act = $this->input->post("sp_act_list");
+        $symptom_list = $this->input->post("symptom_list");
+        $date = $this->input->post("date_list");
+
+        if ($sp_act == "0") {
+            $array = array(
+                "status" => "act"
+            );
+            echo json_encode($array);
+        }
+
+        if ($symptom_list == "0") {
+            $array = array(
+                "status" => "symp"
+            );
+            echo json_encode($array);
+        }
+
+        $array = array();
+        $check = "yes";
+        for ($i = 0; $i < 16; $i++) {
+            $no = $i + 1;
+
+
+            if ($this->input->post("person_" . $no) != "0") {
+                $temp_arr = array(
+                    "person_id" => $this->input->post("person_" . $no),
+                    "sp_act_id" => $sp_act,
+                    "symp_id" => $symptom_list,
+                    "date" => $date,
+                    "evaluation" => $this->input->post("eva_" . $no),
+                    "comment" => $this->input->post("com_" . $no)
+                );
+                array_push($array, $temp_arr);
+            }
+        }
+
+        if (count($array) == "0") {
+
+            $array = array(
+                "status" => "p"
+            );
+        }
+
+        echo json_encode($array);
+    }
+
     public function base() {
 
         echo $_SERVER['SCRIPT_FILENAME'];
@@ -683,7 +727,7 @@ class Patient extends CI_Controller {
             );
         }
 
-        
+
         echo json_encode($array);
     }
 

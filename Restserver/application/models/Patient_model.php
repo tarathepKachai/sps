@@ -31,13 +31,24 @@ class Patient_model extends CI_Model {
         return $query->result();
     }
 
-    public function get_sp_list() {
+    public function get_sp_list($type) {
 //        $sql = 'SELECT * FROM person_info ps INNER JOIN prefix p on ps.prefix = p.id ';
 //        $query = $this->db->query("person_info");
         $this->db->select('*, YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) as age ');
         $this->db->from('person_info');
         $this->db->join('prefix', 'person_info.prefix = prefix.id');
+        switch ($type) {
+            case "date":
+                break;
+            case "option":
+                $this->db->order_by("fname", "asc");
+                break;
+            default:
+                break;
+        }
         //$this->db->order_by("rec_day", "asc");
+
+
         $query = $this->db->get();
 
         return $query->result();
@@ -71,7 +82,7 @@ class Patient_model extends CI_Model {
     }
 
     public function get_symptom_list() {
-         $this->db->order_by("symp_name", "asc");
+        $this->db->order_by("symp_name", "asc");
         $query = $this->db->get("symptom");
 
         return $query->result();
@@ -86,15 +97,22 @@ class Patient_model extends CI_Model {
 
     public function patient_save_data($array) {
 
-        $query = $this->db->insert("person_info", $array);
 
-        if ($query) {
-            return 1;
+        $this->db->where("id_card", $array['id_card']);
+        $query1 = $this->db->get("person_info");
+
+        if ($query1->num_rows() > 0) {
+            $return = array(
+                "status" => "0"
+            );
         } else {
-            return 0;
+            $query2 = $this->db->insert("person_info", $array);
+            $return = array(
+                "status" => "1"
+            );
         }
 
-        return 1;
+        return $return;
     }
 
     public function patient_update_data($array, $person_id) {

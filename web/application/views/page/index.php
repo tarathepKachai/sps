@@ -2,14 +2,14 @@
 <link href="<?php echo base_url("assets/my_css/index_page.css"); ?>" rel="stylesheet" >
 
 <script src="<?php echo base_url("assets/my_js/index_page.js"); ?>" ></script>
-<!--<link type="text/css" href="<?php //echo base_url();                                                                                                                      ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
+<!--<link type="text/css" href="<?php //echo base_url();                                                                                                                         ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                      ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                         ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                      ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                         ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />	
@@ -39,7 +39,7 @@
             </tr>
 
             <tr>
-                <td class="menu_choice enable_choice" id="choice_1">
+                <td class="menu_choice enable_choice" id="choice_1" style="height:30px; overflow:hidden;">
                     บันทึกผู้ป่วยใหม่
                 </td>
                 <td style="padding: 10px;vertical-align: top;font-size: 15px" rowspan="4">
@@ -481,35 +481,61 @@
 
                         <!------------------------   FORM SEARCH   ------------------------------------------***************************************-->
                     </div>
-                    <div style="display: none;" id="choice3">
+                    <div style="display: none;" id="choice3" class="scrollable">
+
+
                         <form id="form_save_list" >
                             <div class="col">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <select id="sp_act_list" name="sp_act_list" class="form-control input-border" >
+                                    <div class="col-md-2">
+                                        <input type="text" name="date_list"id="date_list" style="height:35px;width:100%;padding-left:10px" class="input-border" >
+                                    </div>
+                                    <div class="col-md-5">
+                                        <select id="sp_act_list" name="sp_act_list" style="height:35px;width:100%;padding-left:10px" class="input-border" >
                                             <option value="0">เลือกการกระทำ</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
-                                        <select id="symptom_list" name="symptom_list" class="form-control input-border" >
+                                    <div class="col-md-5">
+                                        <select id="symptom_list" name="symptom_list" style="height:35px;width:100%;padding-left:10px" class="input-border" >
                                             <option value="0">เลือกอาการ/โรค</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <hr>
+                                <div class="row" style="margin-top:5px">
                                     <?php
                                     for ($i = 0; $i < 16; $i++) {
+                                        $no = $i + 1;
                                         ?>
-                                        <div class="col-md-12">
-                                            <div>
-                                                <input type="text" class="rec_day input-border" style="margin-top: 5px" name="date_<?php echo $i + 1; ?>" id="date_<?php echo $i + 1; ?>" >
-                                                <select name="person_<?php echo $i+1; ?>" id="person_<?php echo $i+1; ?>" >
-                                                    <option value="0">เลือกชื่อผู้ป่วยจำลอง</option>
-                                                </select>
+                                        <div class="col-md-12" style="margin-top:2px">
+                                            <div class="row" >
+                                                <div class="col-md-3" >
+
+                                                    <table style="width:100%">
+                                                        <tr>
+                                                            <td style="width:22px">
+                                                                <?php echo $no . ". "; ?>
+                                                            </td>
+                                                            <td >
+                                                                <select class="input-border" style="height:30px;width:90%;padding-left:10px " name="person_<?php echo $i + 1; ?>" id="person_<?php echo $i + 1; ?>" >
+                                                                    <option value="0">เลือกชื่อผู้ป่วยจำลอง</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </div>
+                                                <div class="col-md-4" >
+                                                    <select class="input-border" style="height:30px;width:100%;padding-left:10px" name="eva_<?php echo $i + 1; ?>" id="eva_<?php echo $i + 1; ?>" >
+                                                        <option value="0">เลือกผลประเมิน</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-5" >
+                                                    <textarea placeholder="หมายเหตุ" class="input-border" style="height:30px;width:100%;padding-left:10px" name="com_<?php echo $i + 1; ?>" id="com_<?php echo $i + 1; ?>"></textarea>
+                                                </div>
                                             </div>
-                                            
                                         </div>
-                                    
+
                                         <?php
                                     }
                                     ?>
@@ -522,7 +548,7 @@
 
                         </form>
                         <div style="text-align:center;margin-top: 10px">
-                            <button type="button" onclick="save_list()" id="butt">ดูรายงาน</button>
+                            <button type="button" onclick="save_list()" id="butt">บันทึก</button>
                         </div>
                     </div>
 
@@ -531,13 +557,13 @@
             </tr>
 
             <tr>
-                <td class="menu_choice" id="choice_3">
+                <td class="menu_choice" style="height:30px; overflow:hidden;" id="choice_3">
                     บันทึกตามอาการ
                 </td>
 
             </tr>
             <tr>
-                <td class="menu_choice" id="choice_2">
+                <td class="menu_choice" style="height:30px; overflow:hidden;" id="choice_2">
                     ค้นหา
                 </td>
             </tr>
@@ -579,7 +605,7 @@
         $("#patient_edit input#rec_day_s").datepicker();
         $("#patient_edit input#birthday_s").datepicker();
 
-
+        $("#form_save_list input#date_list").datepicker();
 
         $("#search_form input#day1").datepicker();
         $("#search_form input#day2").datepicker();
@@ -608,9 +634,11 @@
             $("#patient_save input#rec_day").datepicker("setDate", new Date());
             $("#patient_save input#birthday").datepicker("setDate", new Date());
             $("#patient_save input#birthday").val("");
-
+            
             $("#patient_edit input#rec_day_s").datepicker("setDate", new Date());
             $("#patient_edit input#birthday_s").datepicker("setDate", new Date());
+
+             $("#form_save_list input#date_list").datepicker("setDate",new Date());
 
             $("#search_form input#day1").datepicker("setDate", new Date());
             $("#search_form input#day2").datepicker("setDate", new Date());

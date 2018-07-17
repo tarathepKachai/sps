@@ -31,8 +31,35 @@ $(document).ready(function () {
             $.each(data, function (idx, obj) {
                 $("#evaluation").append('<option value="' + obj.eva_id + '">' + obj.eva_id + '</option>');
             });
+            var i = "1";
+            for (i = "1"; i <= "16"; i++) {
+                //console.log(i);
+                $.each(data, function (idx, obj) {
+                    //console.log(obj.eva_id);
+                    $("#eva_" + i).append('<option value="' + obj.eva_id + '">' + obj.eva_id + '</option>');
+                });
+            }
         }
     });
+
+    $.ajax({
+        url: api_url + "sp_list",
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+
+            var i = "1";
+            for (i = "1"; i <= "16"; i++) {
+                //console.log(i);
+                $.each(data, function (idx, obj) {
+
+                    var name = obj.prefix + " " + obj.fname + " " + obj.lname;
+                    $("#person_" + i).append('<option value="' + obj.person_id + '">' + name + '</option>');
+                });
+            }
+        }
+    });
+
     $("#search_option").change(function () {
 
 
@@ -247,7 +274,7 @@ $(document).ready(function () {
 
     });
 
-$.ajax({
+    $.ajax({
         url: api_url + "evaluation_list",
         type: "GET",
         success: function (data) {
@@ -660,23 +687,42 @@ function save_data() {
         dataType: "JSON",
         data: $("#patient_save").serialize(),
         success: function (data) {
-            $.confirm({
 
-                title: 'แจ้งเตือน',
-                content: 'เพิ่มข้อมูลสำเร็จ!',
-                type: 'Green',
-                typeAnimated: true,
-                buttons: {
-                    ok: {
-                        btnClass: 'btn-green',
+            if (data.status === "0") {
+                $.confirm({
+                    title: 'แจ้งเตือน',
+                    content: 'เลขบัตรประชาชนซ้ำ!',
+                    type: 'red',
+                    typeAnimated: true,
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-red',
+
+                        }
 
                     }
+                });
+            } else if (data.status === "1") {
+                $.confirm({
 
-                }
-            });
-            $("form#patient_save")[0].reset();
-            $('#search_table').DataTable().ajax.reload();
-            $('#search_table2').DataTable().ajax.reload();
+                    title: 'แจ้งเตือน',
+                    content: 'เพิ่มข้อมูลสำเร็จ!',
+                    type: 'Green',
+                    typeAnimated: true,
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-green',
+
+                        }
+
+                    }
+                });
+                $("form#patient_save")[0].reset();
+                $('#search_table').DataTable().ajax.reload();
+                $('#search_table2').DataTable().ajax.reload();
+            }
+
+
             // window.location.reload();
             //console.log(data);
 
@@ -1151,6 +1197,70 @@ function more_opt() {
         $("#more_opt").html("ตัวเลือกการค้นหาเพิ่มเติม");
         $("#option").val('1');
     }
+}
+
+function save_list() {
+
+    $.ajax({
+        url: api_url + "save_sp_info_list",
+        type: "POST",
+        data: $("#form_save_list").serialize(),
+        success: function (data) {
+
+
+            if (data.status === "p") {
+                $.confirm({
+                    title: 'แจ้งเตือน',
+                    content: 'กรุณาเลือกชื่อผู้ป่วยจำลอง !',
+                    type: 'red',
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-red'
+                        }
+
+                    }
+                });
+            } else if (data.status === "act") {
+                $.confirm({
+                    title: 'แจ้งเตือน',
+                    content: 'กรุณาเลือกประเภทการกระทำ !',
+                    type: 'red',
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-red'
+                        }
+
+                    }
+                });
+            } else if (data.status === "symp") {
+                $.confirm({
+                    title: 'แจ้งเตือน',
+                    content: 'กรุณาเลือกอาการ/โรค !',
+                    type: 'red',
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-red'
+                        }
+
+                    }
+                });
+            } else {
+                $.confirm({
+                    title: 'แจ้งเตือน',
+                    content: 'บันทึกสำเร็จ !',
+                    type: 'green',
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-green'
+                        }
+
+                    }
+                });
+            }
+            console.log(data);
+        }
+    });
+
 }
 
 
