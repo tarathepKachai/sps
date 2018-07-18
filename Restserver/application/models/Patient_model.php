@@ -430,4 +430,19 @@ class Patient_model extends CI_Model {
         return $data;
     }
 
+    public function insert_sp_info_list($array) {
+        $num = count($array);
+
+        for ($i = 0; $i < $num; $i++) {
+
+            $this->db->set($array[$i]);
+            $this->db->insert("sp_info");
+
+            //var_dump($array[$i]);
+        }
+
+
+        return "1";
+    }
+
 }

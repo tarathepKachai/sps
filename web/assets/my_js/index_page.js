@@ -16,49 +16,41 @@ today = dd + '/' + mm + '/' + yyyy;
 
 $(document).ready(function () {
 
-    console.log(api_url);
+    //console.log(api_url);
 
     $('.modal-switch-btn').click(function () {
         var prevPopup = $(this).attr("data-previouspopup-toggle");
         $(prevPopup).modal('show');
     });
-    get_form_option();
+
+//    setInterval(function () {
+//        console.log("test");
+//    }, 5000);
+
     $.ajax({
-        url: api_url + "evaluation_list",
+        url: api_url + "prefix_list",
         type: "GET",
         success: function (data) {
-            console.log(data);
+
+            var str = "";
+
             $.each(data, function (idx, obj) {
-                $("#evaluation").append('<option value="' + obj.eva_id + '">' + obj.eva_id + '</option>');
+                str += "<tr>";
+                str += "<td>";
+                str += obj.id;
+                str += "</td>";
+                str += "<td>";
+                str += obj.prefix;
+                str += "</td>";
+
+                str += "</tr>";
             });
-            var i = "1";
-            for (i = "1"; i <= "16"; i++) {
-                //console.log(i);
-                $.each(data, function (idx, obj) {
-                    //console.log(obj.eva_id);
-                    $("#eva_" + i).append('<option value="' + obj.eva_id + '">' + obj.eva_id + '</option>');
-                });
-            }
+            $("#manage_body").html(str);
+
         }
     });
 
-    $.ajax({
-        url: api_url + "sp_list",
-        type: "GET",
-        success: function (data) {
-            console.log(data);
-
-            var i = "1";
-            for (i = "1"; i <= "16"; i++) {
-                //console.log(i);
-                $.each(data, function (idx, obj) {
-
-                    var name = obj.prefix + " " + obj.fname + " " + obj.lname;
-                    $("#person_" + i).append('<option value="' + obj.person_id + '">' + name + '</option>');
-                });
-            }
-        }
-    });
+    get_form_option();
 
     $("#search_option").change(function () {
 
@@ -75,13 +67,75 @@ $(document).ready(function () {
                 $('#table1').css('display', 'block');
             }
         }, 300);
+    });
 
+    $("#manage_choice").change(function () {
+
+        var val = $("#manage_choice").val();
+        var opt = "";
+
+        if (val === "1") {
+            opt = "prefix_list";
+        } else if (val === "2") {
+            opt = "sp_act_list";
+        } else if (val === "3") {
+            opt = "symptom_list";
+        } else if (val === "4") {
+            opt = "edu_list";
+        }
+
+        $.ajax({
+            url: api_url + opt,
+            type: "GET",
+            success: function (data) {
+
+                var str = "";
+
+                $.each(data, function (idx, obj) {
+                    str += "<tr>";
+                    if (val === "1") {
+                        str += "<td>";
+                        str += obj.id;
+                        str += "</td>";
+                        str += "<td>";
+                        str += obj.prefix;
+                        str += "</td>";
+                    } else if (val === "2") {
+                        str += "<td>";
+                        str += obj.sp_act_id;
+                        str += "</td>";
+                        str += "<td>";
+                        str += obj.sp_act_name;
+                        str += "</td>";
+                    }else if (val === "3") {
+                        str += "<td>";
+                        str += obj.symp_id;
+                        str += "</td>";
+                        str += "<td>";
+                        str += obj.symp_name;
+                        str += "</td>";
+                    }else if (val === "4") {
+                        str += "<td>";
+                        str += obj.edu_id;
+                        str += "</td>";
+                        str += "<td>";
+                        str += obj.edu_name;
+                        str += "</td>";
+                    }
+                    str += "</tr>";
+                });
+                $("#manage_body").html(str);
+
+            }
+        });
+        console.log(val);
 
     });
 
+
     //$('#example').DataTable();
     var myTable = $('#search_table').dataTable({
-        "pageLength": 5,
+        "pageLength": 10,
 
         "ajax": {
             url: api_url + "api/Patient/sp_data_table",
@@ -124,7 +178,7 @@ $(document).ready(function () {
     });
 
     var myTable2 = $('#search_table2').DataTable({
-        "pageLength": 5,
+        "pageLength": 10,
         "ajax": {
             url: api_url + "sp_info_data_table",
             type: 'GET',
@@ -159,130 +213,6 @@ $(document).ready(function () {
                     className: 'copyButton',
                 }
             ]}
-    });
-
-
-
-
-
-    // GET PREFIX LIST 
-
-    $.ajax({
-        url: api_url + "api/Patient/prefix",
-        type: "get",
-        success: function (data) {
-
-            $.each(data, function (idx, obj) {
-                $('#prefix').append('<option value="' + obj.id + '" >' + obj.prefix + '</option>');
-            });
-
-        },
-        error: function (xhr, status, error) {
-            console.log(xhr + " " + status + " " + " " + error);
-        }
-    });
-
-
-
-    $.ajax({
-        url: api_url + "person_status_list",
-        type: "get",
-        success: function (data) {
-            console.log(data);
-
-            $.each(data, function (idx, obj) {
-                $('#status').append('<option value="' + obj.id + '" >' + obj.status + '</option>');
-            });
-
-        },
-        error: function (xhr, status, error) {
-            console.log(xhr + " " + status + " " + " " + error);
-        }
-    });
-
-    $.ajax({
-        url: api_url + "edu_list",
-        type: "get",
-        success: function (data) {
-            console.log(data);
-
-            $.each(data, function (idx, obj) {
-                $('#edu').append('<option value="' + obj.id + '" >' + obj.edu_name + '</option>');
-                if (obj.id === 5) {
-                    $('#edu_sec').append('ตั้งแต่ ');
-                }
-            });
-
-        },
-        error: function (xhr, status, error) {
-            console.log(xhr + " " + status + " " + " " + error);
-        }
-    });
-
-    $.ajax({
-        url: api_url + "time_sp_list",
-        type: "get",
-        success: function (data) {
-            console.log(data);
-
-            $.each(data, function (idx, obj) {
-                $('#time_sp').append('<option value="' + obj.time_code + '" >' + obj.time_name + '</option>');
-            });
-
-        },
-        error: function (xhr, status, error) {
-            console.log(xhr + " " + status + " " + " " + error);
-        }
-    });
-
-    $.ajax({
-        url: api_url + "sp_act_list",
-        type: "get",
-        success: function (data) {
-            var txt = "";
-            $.each(data, function (idx, obj) {
-                $('#sp_act').append('<option value="' + obj.sp_act_id + '" >' + obj.sp_act_name + '</option>');
-                $('#sp_act_m').append('<option value="' + obj.sp_act_id + '" >' + obj.sp_act_name + '</option>');
-                $('#sp_act_list').append('<option value="' + obj.sp_act_id + '" >' + obj.sp_act_name + '</option>');
-            });
-
-            $.each(data, function (idx, obj) {
-                txt += '<label >' + obj.sp_act_name + '</label>';
-                txt += '<textarea  class="form-control" readonly style="background-color:white" name="exp_' + obj.sp_act_id + '_detail" id="exp_' + obj.sp_act_id + '_detail"></textarea> ';
-            });
-
-
-
-            $("#exp_d").append(txt);
-        }
-    });
-
-
-    $.ajax({
-        url: api_url + "symptom_list",
-        type: "GET",
-        success: function (data) {
-
-            $.each(data, function (idx, obj) {
-
-                $("#symptom").append('<option value="' + obj.symp_id + '" >' + obj.symp_name + '</option>');
-                $("#symptom_m").append('<option value="' + obj.symp_id + '" >' + obj.symp_name + '</option>');
-                $("#symptom_list").append('<option value="' + obj.symp_id + '" >' + obj.symp_name + '</option>');
-            });
-
-        }
-
-    });
-
-    $.ajax({
-        url: api_url + "evaluation_list",
-        type: "GET",
-        success: function (data) {
-            console.log(data);
-            $.each(data, function (idx, obj) {
-                $("#evaluation_m").append('<option value="' + obj.eva_id + '">' + obj.eva_id + '</option>');
-            });
-        }
     });
 
 
@@ -374,6 +304,10 @@ $(document).ready(function () {
         $("#choice_3").removeClass("enable_choice");
         $("#choice_3").addClass("disable_choice");
         $("#choice3").css({"display": "none", "background-color": "white"});
+
+        $("#choice_4").removeClass("enable_choice");
+        $("#choice_4").addClass("disable_choice");
+        $("#choice4").css({"display": "none", "background-color": "white"});
     });
 
     $("#choice_2").click(function () {
@@ -390,6 +324,10 @@ $(document).ready(function () {
         $("#choice_3").addClass("disable_choice");
         $("#choice3").css({"display": "none", "background-color": "white"});
 
+        $("#choice_4").removeClass("enable_choice");
+        $("#choice_4").addClass("disable_choice");
+        $("#choice4").css({"display": "none", "background-color": "white"});
+
     });
 
     $("#choice_3").click(function () {
@@ -404,6 +342,28 @@ $(document).ready(function () {
         $("#choice_3").removeClass("disable_choice");
         $("#choice_3").addClass("enable_choice");
         $("#choice3").css("display", "block");
+
+        $("#choice_4").removeClass("enable_choice");
+        $("#choice_4").addClass("disable_choice");
+        $("#choice4").css({"display": "none", "background-color": "white"});
+    });
+
+    $("#choice_4").click(function () {
+        $("#choice_1").removeClass("enable_choice");
+        $("#choice_1").addClass("disable_choice");
+        $("#choice1").css({"display": "none", "background-color": "white"});
+
+        $("#choice_2").removeClass("enable_choice");
+        $("#choice_2").addClass("disable_choice");
+        $("#choice2").css({"display": "none", "background-color": "white"});
+
+        $("#choice_3").removeClass("enable_choice");
+        $("#choice_3").addClass("disable_choice");
+        $("#choice3").css({"display": "none", "background-color": "white"});
+
+        $("#choice_4").removeClass("disable_choice");
+        $("#choice_4").addClass("enable_choice");
+        $("#choice4").css("display", "block");
     });
 
 
@@ -430,7 +390,17 @@ $(document).ready(function () {
 
     $('#edit_modal').on('hidden.bs.modal', function () {
         $("#patient_edit")[0].reset();
+        $("#patient_edit textarea[name=exp_1_detail]").text("");
+        $("#patient_edit textarea[name=exp_2_detail]").text("");
+        $("#patient_edit textarea[name=exp_3_detail]").text("");
+        $("#patient_edit textarea[name=exp_4_detail]").text("");
     });
+
+    $("#evaluation_m").on('hidden.cs.modal', function () {
+        //$("#form_sp_info")[0].reset();
+//        $("#evaluation_m").val('0');
+    });
+
 
 });
 
@@ -490,8 +460,6 @@ function submit() {
                     }
                 }
             });
-
-
 
 
 
@@ -895,7 +863,8 @@ function edit_person_info(id) {
                         }
                     } else if (idx === "prefix" || idx === "edu" || idx === "status" || idx === "time_sp") {
 
-                        $('#' + idx + '_s option[value="' + obj + '"]').attr("selected", true);
+                        //$('#' + idx + '_s option[value="' + obj + '"]').attr("selected", true);
+                        $('#' + idx + '_s').val(obj);
                         if (idx === "edu" && obj === "5") {
                             $("#edu_ex_s").css("display", "inline");
                         }
@@ -908,6 +877,8 @@ function edit_person_info(id) {
                         $("#edu_detail_s").val(obj);
                     } else if (idx === "gender") {
                         $('#' + idx + '_s option[value="' + obj + '"]').attr("selected", true);
+//                        $('#' + idx+'_s').val(obj);
+//                        console.log('#' + idx+'_s'+"//"+obj);
                     } else {
                         $("#patient_edit input[name=" + idx + "]").val(obj);
                     }
@@ -1010,9 +981,20 @@ function edit_sp_info(id) {
             $("#date").val(day);
 
             $('#sp_info_id_m').val(data_arr.sp_info_id);
-            $('#sp_act_m option[value="' + data_arr.sp_act_id + '"]').attr("selected", true);
-            $('#symptom_m option[value="' + data_arr.symp_id + '"]').attr("selected", true);
-            $('#evaluation_m option[value="' + data_arr.evaluation + '"]').attr("selected", true);
+            //$('#sp_act_m option[value="' + data_arr.sp_act_id + '"]').attr("selected", true);
+            $("#sp_act_m").val(data_arr.sp_act_id);
+            //$('#symptom_m option[value="' + data_arr.symp_id + '"]').attr("selected", true);
+            $("#symptom_m").val(data_arr.symp_id);
+
+            if (data_arr.evaluation != "" && data_arr.evaluation != null) {
+                console.log("xxx");
+                $('#evaluation_m option[value="' + data_arr.evaluation + '"]').attr("selected", true);
+                $("#evaluation_m").val(data_arr.evaluation);
+            } else {
+
+                $("#evaluation_m").val(0);
+                console.log("yyy");
+            }
             $('#comment_m').val(data_arr.comment);
         }
     });
@@ -1029,7 +1011,7 @@ function update_sp_info() {
         type: "POST",
         data: $("#form_sp_info").serialize(),
         success: function (data) {
-            $("#edit_modal").modal("hide");
+            $("#sp_info_modal").modal("hide");
             $.confirm({
                 title: 'แจ้งเตือน',
                 content: 'แก้ไขสำเร็จ !',
@@ -1042,8 +1024,9 @@ function update_sp_info() {
 
                 }
             });
-            $('#search_table').DataTable().ajax.reload();
-            $('#search_table2').DataTable().ajax.reload();
+//            $('#search_table').DataTable().ajax.reload();
+//            $('#search_table2').DataTable().ajax.reload();
+            search_submit();
 
         }
     });
@@ -1073,6 +1056,9 @@ function update_sp() {
 
                 }
             });
+//            $('#search_table').DataTable().ajax.reload();
+//            $('#search_table2').DataTable().ajax.reload();
+            search_submit();
         }
     });
 
@@ -1089,8 +1075,10 @@ function close_modal() {
 
 function close_modal_sp() {
     $("#form_sp_info")[0].reset();
-    //console.log($("#form_sp_info").serialize());
-    $("sp_info_modal").modal("hide");
+//    //console.log($("#form_sp_info").serialize());
+    // $("#evaluation_m option[value='0']").attr('selected'.true);
+    $("#evaluation_m").val(0);
+    //$("#sp_info_modal").modal("hide");
 }
 
 function get_form_option() {
@@ -1104,6 +1092,14 @@ function get_form_option() {
                 str += '<option value="' + obj.id + '" >' + obj.prefix + '</option>';
             });
             $('#patient_edit #prefix_s').html(str);
+
+            str = "";
+            $.each(data, function (idx, obj) {
+                str += '<option value="' + obj.id + '" >' + obj.prefix + '</option>';
+//                $('#prefix').append('<option value="' + obj.id + '" >' + obj.prefix + '</option>');
+            });
+            $('#prefix').html(str);
+
         },
         error: function (xhr, status, error) {
             console.log(xhr + " " + status + " " + " " + error);
@@ -1115,11 +1111,18 @@ function get_form_option() {
         type: "get",
         success: function (data) {
             console.log(data);
-
+            var str = "";
+            var j = "1";
             $.each(data, function (idx, obj) {
-                $('#patient_edit #status_s').append('<option value="' + obj.id + '" >' + obj.status + '</option>');
-            });
 
+                if (j === "1") {
+                    str += '<option value="0" >--เลือก--</option>';
+                    j++;
+                }
+                str += '<option value="' + obj.id + '" >' + obj.status + '</option>';
+//                $('#patient_edit #status_s').append('<option value="' + obj.id + '" >' + obj.status + '</option>');
+            });
+            $('#patient_edit #status_s').html(str);
         },
         error: function (xhr, status, error) {
             console.log(xhr + " " + status + " " + " " + error);
@@ -1131,13 +1134,21 @@ function get_form_option() {
         type: "get",
         success: function (data) {
             console.log(data);
-
+            var str = "";
+            var j = "1";
             $.each(data, function (idx, obj) {
-                $('#patient_edit #edu_s').append('<option value="' + obj.id + '" >' + obj.edu_name + '</option>');
-                if (obj.id === 5) {
-                    $('#patient_edit #edu_sec_s').append('ตั้งแต่ ');
+                if (j === "1") {
+                    str += '<option value="0" >--เลือก--</option>';
+                    j++;
                 }
+                str += '<option value="' + obj.id + '" >' + obj.edu_name + '</option>';
+
+//                $('#patient_edit #edu_s').append('<option value="' + obj.id + '" >' + obj.edu_name + '</option>');
+//                if (obj.id === 5) {
+//                    $('#patient_edit #edu_sec_s').append('ตั้งแต่ ');
+//                }
             });
+            $('#patient_edit #edu_s').html(str);
 
         },
         error: function (xhr, status, error) {
@@ -1150,16 +1161,276 @@ function get_form_option() {
         type: "get",
         success: function (data) {
             console.log(data);
-
+            var str = "";
+            var j = "1";
             $.each(data, function (idx, obj) {
-                $('#patient_edit #time_sp_s').append('<option value="' + obj.time_code + '" >' + obj.time_name + '</option>');
+
+                str += '<option value="' + obj.time_code + '" >' + obj.time_name + '</option>';
+//                $('#patient_edit #time_sp_s').append('<option value="' + obj.time_code + '" >' + obj.time_name + '</option>');
             });
+            $('#patient_edit #time_sp_s').html(str);
+
+            str = "";
+            j = "1";
+            $.each(data, function (idx, obj) {
+                str += '<option value="' + obj.time_code + '" >' + obj.time_name + '</option>';
+                //$('#time_sp').append('<option value="' + obj.time_code + '" >' + obj.time_name + '</option>');
+            });
+            $('#time_sp').html(str);
 
         },
         error: function (xhr, status, error) {
             console.log(xhr + " " + status + " " + " " + error);
         }
     });
+
+
+    $.ajax({
+        url: api_url + "person_status_list",
+        type: "get",
+        success: function (data) {
+            console.log(data);
+            var str = "";
+            $.each(data, function (idx, obj) {
+                str += '<option value="' + obj.id + '" >' + obj.status + '</option>';
+//                $('#status').append('<option value="' + obj.id + '" >' + obj.status + '</option>');
+            });
+            $('#status').html(str);
+
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr + " " + status + " " + " " + error);
+        }
+    });
+
+    $.ajax({
+        url: api_url + "edu_list",
+        type: "get",
+        success: function (data) {
+            console.log(data);
+            var str = "";
+            $.each(data, function (idx, obj) {
+                str += '<option value="' + obj.id + '" >' + obj.edu_name + '</option>';
+//                $('#edu').append('<option value="' + obj.id + '" >' + obj.edu_name + '</option>');
+
+            });
+            $('#edu').html(str);
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr + " " + status + " " + " " + error);
+        }
+    });
+
+
+
+    $.ajax({
+        url: api_url + "sp_act_list",
+        type: "get",
+        success: function (data) {
+            var txt = "";
+
+            var str = "";
+            var j = "1";
+            $.each(data, function (idx, obj) {
+                if (j === "1") {
+                    str += '<option value="0" >เลือกการกระทำ</option>';
+                    j++;
+                }
+                str += '<option value="' + obj.sp_act_id + '" >' + obj.sp_act_name + '</option>';
+//                $('#sp_act').append('<option value="' + obj.sp_act_id + '" >' + obj.sp_act_name + '</option>');
+
+            });
+            $('#sp_act').html(str);
+
+            str = "";
+            j = "1";
+            $.each(data, function (idx, obj) {
+                if (j === "1") {
+                    str += '<option value="0" >เลือกการกระทำ</option>';
+                    j++;
+                }
+
+                str += '<option value="' + obj.sp_act_id + '" >' + obj.sp_act_name + '</option>';
+//                $('#sp_act_m').append('<option value="' + obj.sp_act_id + '" >' + obj.sp_act_name + '</option>');
+            });
+            $('#sp_act_m').html(str);
+
+            str = "";
+            j = "1";
+            $.each(data, function (idx, obj) {
+                if (j === "1") {
+                    str += '<option value="0" >เลือกการกระทำ</option>';
+                    j++;
+                }
+                str += '<option value="' + obj.sp_act_id + '" >' + obj.sp_act_name + '</option>';
+//                $('#sp_act_list').append('<option value="' + obj.sp_act_id + '" >' + obj.sp_act_name + '</option>');
+            });
+            $('#sp_act_list').html(str);
+            txt = "";
+            $.each(data, function (idx, obj) {
+                txt += '<label >' + obj.sp_act_name + '</label>';
+                txt += '<textarea  class="form-control" readonly style="background-color:white" name="exp_' + obj.sp_act_id + '_detail" id="exp_' + obj.sp_act_id + '_detail"></textarea> ';
+            });
+
+
+
+            $("#exp_d").html(txt);
+        }
+    });
+
+
+    $.ajax({
+        url: api_url + "symptom_list",
+        type: "GET",
+        success: function (data) {
+            // symptom ส่วน search
+            var str = "";
+            var j = "1";
+            $.each(data, function (idx, obj) {
+                if (j === "1") {
+                    str += '<option value="0" >--กรุณาเลือกอาการ/โรค--</option>'
+                    j++;
+                }
+                str += '<option value="' + obj.symp_id + '" >' + obj.symp_name + '</option>';
+                // $("#symptom").append('<option value="' + obj.symp_id + '" >' + obj.symp_name + '</option>');
+            });
+            $("#symptom").html(str);
+
+            // symptom ส่วน modal edit sp_info
+            str = "";
+            j = "1";
+            $.each(data, function (idx, obj) {
+
+                if (j === "1") {
+                    str += '<option value="0" >--กรุณาเลือกอาการ/โรค--</option>'
+                    j++;
+                }
+                str += '<option value="' + obj.symp_id + '" >' + obj.symp_name + '</option>';
+
+                // $("#symptom_m").append('<option value="' + obj.symp_id + '" >' + obj.symp_name + '</option>');
+            });
+            $("#symptom_m").html(str);
+
+            //symptom ส่วน 
+            str = "";
+            j = "1";
+            $.each(data, function (idx, obj) {
+                if (j === "1") {
+                    str += '<option value="0" >--กรุณาเลือกอาการ/โรค--</option>';
+                    j++;
+                }
+                str += '<option value="' + obj.symp_id + '" >' + obj.symp_name + '</option>';
+
+//                $("#symptom_list").append('<option value="' + obj.symp_id + '" >' + obj.symp_name + '</option>');
+            });
+            $("#symptom_list").html(str);
+
+        }
+
+    });
+
+    $.ajax({
+        url: api_url + "evaluation_list",
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+
+            var eva_opt = "";
+            var j = "1";
+            $.each(data, function (idx, obj) {
+                if (j === "1") {
+                    eva_opt += '<option value="0">เลือกผลการประเมิน</option>';
+                    j++;
+                }
+                eva_opt += '<option value="' + obj.eva_id + '">' + obj.eva_desc + '</option>';
+//                $("#evaluation_m").append('<option value="' + obj.eva_id + '">' + obj.eva_desc + '</option>');
+            });
+            $("#evaluation_m").html(eva_opt);
+            var i = "1";
+            for (i = "1"; i <= "16"; i++) {
+                //console.log(i);
+                var str = "";
+                var j = "1";
+                $.each(data, function (idx, obj) {
+                    //console.log(obj.eva_id);
+                    if (j === "1") {
+
+                        str += '<option value="0">เลือกผลการประเมิน</option>';
+
+                        j++;
+                    }
+                    str += '<option value="' + obj.eva_id + '">' + obj.eva_desc + '</option>';
+//                    $("#eva_" + i).append('<option value="' + obj.eva_id + '">' + obj.eva_desc + '</option>');
+                });
+                $("#eva_" + i).html(str);
+            }
+        }
+    });
+
+
+    $.ajax({
+        url: api_url + "evaluation_list",
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+            var str_eva = [];
+//            $.each(data, function (idx, obj) {
+//                $("#evaluation").append('<option value="' + obj.eva_id + '">' + obj.eva_desc + '</option>');
+//            });
+
+            var i = "1";
+            for (i = "1"; i <= "16"; i++) {
+                //console.log(i);
+                var str = "";
+                var j = "1";
+                $.each(data, function (idx, obj) {
+                    //console.log(obj.eva_id);
+                    if (j === "1") {
+
+                        str += '<option value="0">เลือกผลการประเมิน</option>';
+
+                        j++;
+                    }
+                    str += '<option value="' + obj.eva_id + '">' + obj.eva_desc + '</option>';
+//                    $("#eva_" + i).append('<option value="' + obj.eva_id + '">' + obj.eva_desc + '</option>');
+                });
+                $("#eva_" + i).html(str);
+            }
+
+        }
+    });
+
+    $.ajax({
+        url: api_url + "sp_list",
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+
+            var i = "1";
+            for (i = "1"; i <= "16"; i++) {
+                //console.log(i);
+                var str = "";
+                var j = "1";
+                $.each(data, function (idx, obj) {
+
+                    var name = obj.prefix + " " + obj.fname + " " + obj.lname;
+
+
+                    if (j === "1") {
+
+                        str += '<option value="0">เลือกชื่อผู้ป่วยจำลอง</option>';
+
+                        j++;
+                    }
+                    str += '<option value="' + obj.person_id + '">' + name + '</option>';
+
+//                    $("#person_" + i).append('<option value="' + obj.person_id + '">' + name + '</option>');
+                });
+                $("#person_" + i).html(str);
+            }
+        }
+    });
+
 }
 
 function convert_date_ad(date) {
@@ -1256,8 +1527,33 @@ function save_list() {
 
                     }
                 });
+
+
+                $('#sp_act_list').val("0");
+                $('#symptom_list').val("0");
+
+                document.getElementById("sp_act_list").selectedIndex = 0;
+                document.getElementById("symptom_list").selectedIndex = 0; //1 = option 2
+
+                var i = "1";
+                for (i = "1"; i <= "16"; i++) {
+                    //$('#person_' + i + ' option[value="0"]').attr('selected', true);
+                    document.getElementById('person_' + i).selectedIndex = 0; //1 = option 2
+
+                    //$('#eva_' + i + ' option[value="0"]').attr('selected', true);
+                    document.getElementById('eva_' + i).selectedIndex = 0; //1 = option 2
+
+                    //$('#com_' + i + ' option[value="0"]').attr('selected', true);
+                    document.getElementById('com_' + i).value = ""; //1 = option 2
+
+                }
+
+//                $('#search_table').DataTable().ajax.reload();
+//                $('#search_table2').DataTable().ajax.reload();
+                search_submit();
+
             }
-            console.log(data);
+            //console.log(data);
         }
     });
 

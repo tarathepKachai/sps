@@ -656,16 +656,17 @@ class Patient extends CI_Controller {
     }
 
     public function save_sp_info_list() {
-        header('Content-Type: application/json');
+        //header('Content-Type: application/json');
         $sp_act = $this->input->post("sp_act_list");
         $symptom_list = $this->input->post("symptom_list");
         $date = $this->input->post("date_list");
-
+        $date_ad = $this->convert_date_ad($date);
         if ($sp_act == "0") {
             $array = array(
                 "status" => "act"
             );
             echo json_encode($array);
+            exit();
         }
 
         if ($symptom_list == "0") {
@@ -673,6 +674,7 @@ class Patient extends CI_Controller {
                 "status" => "symp"
             );
             echo json_encode($array);
+            exit();
         }
 
         $array = array();
@@ -686,9 +688,11 @@ class Patient extends CI_Controller {
                     "person_id" => $this->input->post("person_" . $no),
                     "sp_act_id" => $sp_act,
                     "symp_id" => $symptom_list,
-                    "date" => $date,
+                    "date" => $date_ad,
                     "evaluation" => $this->input->post("eva_" . $no),
-                    "comment" => $this->input->post("com_" . $no)
+                    "comment" => $this->input->post("com_" . $no),
+                    "datetime" => date("Y-m-d H:i:s"),
+                    "last_update" => date("Y-m-d H:i:s")
                 );
                 array_push($array, $temp_arr);
             }
@@ -699,9 +703,12 @@ class Patient extends CI_Controller {
             $array = array(
                 "status" => "p"
             );
+            echo json_encode($array);
+            exit();
+        } else {
+            $array = $this->Patient_model->insert_sp_info_list($array);
         }
-
-        echo json_encode($array);
+        var_dump($array);
     }
 
     public function base() {

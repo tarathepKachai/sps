@@ -2,14 +2,14 @@
 <link href="<?php echo base_url("assets/my_css/index_page.css"); ?>" rel="stylesheet" >
 
 <script src="<?php echo base_url("assets/my_js/index_page.js"); ?>" ></script>
-<!--<link type="text/css" href="<?php //echo base_url();                                                                                                                         ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
+<!--<link type="text/css" href="<?php //echo base_url();                                                                                                                          ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                         ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                          ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                         ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                          ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />	
@@ -42,7 +42,7 @@
                 <td class="menu_choice enable_choice" id="choice_1" style="height:30px; overflow:hidden;">
                     บันทึกผู้ป่วยใหม่
                 </td>
-                <td style="padding: 10px;vertical-align: top;font-size: 15px" rowspan="4">
+                <td style="padding: 10px;vertical-align: top;font-size: 15px" rowspan="5">
                     <!--Save Patient Data-->
                     <div style="display: block;"  id="choice1" class="scrollable">
                         <form name="patient_save" id="patient_save"  action="#" method="POST">
@@ -548,11 +548,55 @@
 
                         </form>
                         <div style="text-align:center;margin-top: 10px">
-                            <button type="button" onclick="save_list()" id="butt">บันทึก</button>
+                            <button type="button" class="btn btn-primary" onclick="save_list()" id="butt">บันทึก</button>
                         </div>
                     </div>
 
+                    <div style="display: none;" id="choice4" class="scrollable">
+                        <form id="form_manage"> 
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <select name="manage_choice" id="manage_choice" class="form-control input-border" style="width:100%;padding-left: 10px;">
+                                           
+                                            <option value="1">คำนำหน้าชื่อ</option>
+                                            <option value="2">การกระทำ</option>
+                                            <option value="3">อาการ/โรค</option>
+                                            <option value="4">วุฒิการศึกษา</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" name="manage_choice_data" id="manage_choice_data" class="form-control input-border" >
 
+                                    </div>
+                                    <div class="col-md-1" style="text-align:center">
+                                        <button type="button" class="btn btn-primary">บันทึก</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="row" style="margin-top:10px">
+                                    <div class="col">
+                                        <table  style="border: 1px solid black" class="table table-bordered table-striped" id="manage_table" > 
+                                            <thead name="manage_head" id="manage_head">
+                                                <tr>
+                                                    <th>test1</th>
+                                                    <th>test2</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody name="manage_body" id="manage_body" >
+                                                <tr>
+                                                    <td colspan="2">
+                                                        
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </td>
             </tr>
 
@@ -568,9 +612,15 @@
                 </td>
             </tr>
             <tr>
-                <td style="height: 60vh;border: 2px solid black; ">
+                <td class="menu_choice" style="height:30px; overflow:hidden;" id="choice_4">
+                    จัดการตัวเลือกระบบ
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 50vh;border: 2px solid black; ">
 
                 </td>
+
             </tr>
         </tbody>
     </table>
@@ -634,11 +684,11 @@
             $("#patient_save input#rec_day").datepicker("setDate", new Date());
             $("#patient_save input#birthday").datepicker("setDate", new Date());
             $("#patient_save input#birthday").val("");
-            
+
             $("#patient_edit input#rec_day_s").datepicker("setDate", new Date());
             $("#patient_edit input#birthday_s").datepicker("setDate", new Date());
 
-             $("#form_save_list input#date_list").datepicker("setDate",new Date());
+            $("#form_save_list input#date_list").datepicker("setDate", new Date());
 
             $("#search_form input#day1").datepicker("setDate", new Date());
             $("#search_form input#day2").datepicker("setDate", new Date());

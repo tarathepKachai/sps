@@ -1,3 +1,28 @@
+
+
+$(document).ready(function () {
+
+    $('#edit_modal').on('hidden.bs.modal', function () {
+        $("#patient_edit")[0].reset();
+        $("#patient_edit textarea[name=exp_1_detail]").text("");
+        $("#patient_edit textarea[name=exp_2_detail]").text("");
+        $("#patient_edit textarea[name=exp_3_detail]").text("");
+        $("#patient_edit textarea[name=exp_4_detail]").text("");
+    });
+
+
+});
+
+
+function close_modal() {
+    $("#patient_edit")[0].reset();
+    $("#patient_edit").modal("hide");
+    $("#patient_edit textarea[name=exp_1_detail]").text("");
+    $("#patient_edit textarea[name=exp_2_detail]").text("");
+    $("#patient_edit textarea[name=exp_3_detail]").text("");
+    $("#patient_edit textarea[name=exp_4_detail]").text("");
+}
+
 function add_sp_info() {
     $('#sp_act')
             .find('option').not(':first')
@@ -46,7 +71,7 @@ function add_sp_info() {
         success: function (data) {
             console.log(data);
             $.each(data, function (idx, obj) {
-                $("#evaluation").append('<option value="' + obj.eva_id + '">' + obj.eva_id + '</option>');
+                $("#evaluation").append('<option value="' + obj.eva_id + '">' + obj.eva_desc + '</option>');
             });
         }
     });
@@ -246,7 +271,7 @@ function save_comment() {
     });
 }
 
-function delete_sp_info(id,person_id) {
+function delete_sp_info(id, person_id) {
 
     //console.log(id);
 
@@ -262,7 +287,7 @@ function delete_sp_info(id,person_id) {
                     type: "POST",
                     data: {
                         sp_info_id: id,
-                        person_id:person_id
+                        person_id: person_id
                     },
                     success: function (data) {
                         $.confirm({
@@ -283,7 +308,7 @@ function delete_sp_info(id,person_id) {
                 })
             },
             ยกเลิก: function () {
-                
+
             }
         }
     });
@@ -291,14 +316,10 @@ function delete_sp_info(id,person_id) {
 }
 
 function edit_person_info(id) {
-    $("#patient_edit")[0].reset();
+    //$("#patient_edit")[0].reset();
 
     $("#patient_edit input#rec_day").datepicker("setDate", new Date());
-
     $("#patient_edit input#birthday_s").datepicker("setDate", new Date());
-
-
-
 
     $("#edit_modal").modal('show');
 
@@ -368,17 +389,26 @@ function edit_person_info(id) {
 
                     } else if (idx === "edu_detail") {
                         $("#edu_detail_s").val(obj);
+                    } else if (idx === "gender") {
+                        $('#' + idx + '_s option[value="' + obj + '"]').attr("selected", true);
                     } else {
                         $("#patient_edit input[name=" + idx + "]").val(obj);
                     }
                 }
+
             });
+
+
 
         },
         error: function (xhr, status, error) {
             console.log(xhr + " " + status + " " + " " + error);
         }
     });
+
+
+
+    // ADD DATA TO TEXT AREA
 
     $.ajax({
         url: api_url + "get_sp_info_by_id",
@@ -429,6 +459,7 @@ function edit_person_info(id) {
                     $("#patient_edit textarea[name=exp_4_detail]").append(exp4);
                 }
             });
+
             if (!$("#patient_edit textarea[name=exp_1_detail]").val() && !$("#patient_edit textarea[name=exp_2_detail]").val()
                     && !$("#patient_edit textarea[name=exp_3_detail]").val() && !$("#patient_edit textarea[name=exp_4_detail]").val()) {
                 $("#exp02").prop("checked", true);
@@ -441,6 +472,7 @@ function edit_person_info(id) {
 //            $("#patient_edit textarea[name=exp_4_detail]").text(exp4);
         }
     });
+
 }
 
 function get_form_option() {
@@ -486,7 +518,7 @@ function get_form_option() {
             $.each(data, function (idx, obj) {
                 $('#patient_edit #edu_s').append('<option value="' + obj.id + '" >' + obj.edu_name + '</option>');
                 if (obj.id === 5) {
-                    $('#patient_edit #edu_sec_s').append('ตั้งแต่ ');
+                    $('#patient_edit #edu_sec_s').append('ตั้งแต่');
                 }
             });
 
@@ -533,7 +565,20 @@ function update_sp() {
                     }
                 }
             });
+            $.ajax({
+                url: api_url + "get_sp_data",
+                type: "POST",
+                data: {
+                    id: person_id
+                },
+                success: function (data) {
+                    var res = data[0];
+                    var name = res.prefix + " " + res.fname + " " + res.lname;
+                    $("#name").html(name);
 
+
+                }
+            });
         }
     });
 
