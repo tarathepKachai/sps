@@ -76,6 +76,7 @@ $route['get_sp_by_id'] = "api/Patient/get_sp_by_id";
 $route['get_sp_data'] = "api/Patient/get_sp_data";
 $route['get_single_sp_info'] = "api/Patient/get_single_sp_info";
 $route['sp_data_table'] = "api/Patient/sp_data_table";
+$route['manage_choice_table'] = "api/Patient/manage_choice_table";
 
 $route['sp_info_data_table'] = 'api/Patient/sp_info_data_table';
 $route['search_person'] = 'api/Patient/search_person';

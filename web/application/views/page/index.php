@@ -563,6 +563,7 @@
                                             <option value="2">การกระทำ</option>
                                             <option value="3">อาการ/โรค</option>
                                             <option value="4">วุฒิการศึกษา</option>
+                                            <option value="5">เวลาที่ผู้ป่วยจำลองสะดวก</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
@@ -570,17 +571,17 @@
 
                                     </div>
                                     <div class="col-md-1" style="text-align:center">
-                                        <button type="button" class="btn btn-primary">บันทึก</button>
+                                        <button type="button" onclick="add_choice()" class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </div>
                                 
                                 <div class="row" style="margin-top:10px">
-                                    <div class="col">
-                                        <table  style="border: 1px solid black" class="table table-bordered table-striped" id="manage_table" > 
-                                            <thead name="manage_head" id="manage_head">
+                                    <div class="col" >
+                                        <table  style="border: 1px solid black;width: 90%" class="table table-bordered" id="manage_table" > 
+                                            <thead name="manage_head" id="manage_head" >
                                                 <tr>
                                                     <th>test1</th>
-                                                    <th>test2</th>
+                                                    <th style="width:10%">test2</th>
                                                 </tr>
                                             </thead>
                                             <tbody name="manage_body" id="manage_body" >

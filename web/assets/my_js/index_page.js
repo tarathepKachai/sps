@@ -27,28 +27,46 @@ $(document).ready(function () {
 //        console.log("test");
 //    }, 5000);
 
-    $.ajax({
-        url: api_url + "prefix_list",
-        type: "GET",
-        success: function (data) {
+//    $.ajax({
+//        url: api_url + "prefix_list",
+//        type: "GET",
+//        success: function (data) {
+//
+//            var str = "";
+//
+//            $.each(data, function (idx, obj) {
+//                str += "<tr>";
+//                str += "<td>";
+//                str += obj.prefix;
+//                str += "</td>";
+//                str += "<td>";
+//                str += "</td>";
+//
+//                str += "</tr>";
+//            });
+//            $("#manage_body").html(str);
+//
+//        }
+//    });
 
-            var str = "";
+    $('#manage_table').dataTable({
+        "pageLength": 5,
 
-            $.each(data, function (idx, obj) {
-                str += "<tr>";
-                str += "<td>";
-                str += obj.id;
-                str += "</td>";
-                str += "<td>";
-                str += obj.prefix;
-                str += "</td>";
-
-                str += "</tr>";
-            });
-            $("#manage_body").html(str);
-
+        "ajax": {
+            url: api_url + "api/Patient/manage_choice_table",
+            type: 'POST',
+            data: {
+                manage_choice: "0"
+            },
+            "dataSrc": function (json) {
+                //Make your callback here.
+                dataReport = json.data;
+                console.log(dataReport);
+                return json.data;
+            }
         }
     });
+
 
     get_form_option();
 
@@ -82,53 +100,37 @@ $(document).ready(function () {
             opt = "symptom_list";
         } else if (val === "4") {
             opt = "edu_list";
+        } else if (val === "5") {
+            opt = "time_sp_list";
         }
 
         $.ajax({
-            url: api_url + opt,
-            type: "GET",
+            url: api_url + "manage_choice_table",
+            type: "POST",
+            data: $("#form_manage").serialize(),
             success: function (data) {
+                //console.log(data);
+                var len = data.length;
+                var arr = [];
+//            $('#search_table').DataTable();
+                $("#load").css("display", "block");
+                var data_ar = data.data;
+                console.log(data.data);
+                $('#manage_table').dataTable().fnClearTable();
+                $('#manage_table').dataTable().fnAddData(data.data);
+//                if (!data.result) {
+//                    $('#form_manage').dataTable().fnAddData(data);
+//
+//                } else {
+//                    console.log("not found");
+//                }
 
-                var str = "";
-
-                $.each(data, function (idx, obj) {
-                    str += "<tr>";
-                    if (val === "1") {
-                        str += "<td>";
-                        str += obj.id;
-                        str += "</td>";
-                        str += "<td>";
-                        str += obj.prefix;
-                        str += "</td>";
-                    } else if (val === "2") {
-                        str += "<td>";
-                        str += obj.sp_act_id;
-                        str += "</td>";
-                        str += "<td>";
-                        str += obj.sp_act_name;
-                        str += "</td>";
-                    }else if (val === "3") {
-                        str += "<td>";
-                        str += obj.symp_id;
-                        str += "</td>";
-                        str += "<td>";
-                        str += obj.symp_name;
-                        str += "</td>";
-                    }else if (val === "4") {
-                        str += "<td>";
-                        str += obj.edu_id;
-                        str += "</td>";
-                        str += "<td>";
-                        str += obj.edu_name;
-                        str += "</td>";
-                    }
-                    str += "</tr>";
-                });
-                $("#manage_body").html(str);
+                setTimeout(function () {
+                    $("#load").css("display", "none");
+                }, 200);
 
             }
         });
-        console.log(val);
 
     });
 
@@ -570,8 +572,6 @@ function search_submit() {
         data: $("#search_form").serialize(),
         success: function (data) {
 
-            console.log(data.length);
-            console.log(data);
             var len = data.length;
             var arr = [];
 //            $('#search_table').DataTable();
@@ -1272,8 +1272,6 @@ function get_form_option() {
                 txt += '<textarea  class="form-control" readonly style="background-color:white" name="exp_' + obj.sp_act_id + '_detail" id="exp_' + obj.sp_act_id + '_detail"></textarea> ';
             });
 
-
-
             $("#exp_d").html(txt);
         }
     });
@@ -1556,6 +1554,57 @@ function save_list() {
             //console.log(data);
         }
     });
+
+}
+
+function edit_choice($id) {
+    alert($id);
+}
+
+function add_choice() {
+    var choice_data = $("#manage_choice_data").val();
+
+    if (choice_data !== "" && choice_data !== null) {
+        $.ajax({
+            url: api_url + "api/Patient/add_choice",
+            type: "POST",
+            data: $("#form_manage").serialize(),
+            success: function (data) {
+                console.log(data);
+
+
+                if (data.status === "dup") {
+                    $.confirm({
+
+                        title: 'แจ้งเตือน',
+                        content: 'ข้อมูลซ้ำ !',
+                        type: 'red',
+                        typeAnimated: true,
+                        buttons: {
+                            ok: {
+                                btnClass: 'btn-red',
+                            }
+                        }
+                    });
+                }
+
+                get_form_option();
+            }
+        });
+    } else {
+        $.confirm({
+            title: 'แจ้งเตือน',
+            content: 'กรุณากรอก !',
+            type: 'red',
+            typeAnimated: true,
+            buttons: {
+                ok: {
+                    btnClass: 'btn-red',
+                }
+            }
+        });
+    }
+
 
 }
 

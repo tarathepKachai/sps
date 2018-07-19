@@ -193,6 +193,79 @@ class Patient extends CI_Controller {
         exit();
     }
 
+    public function manage_choice_table() {
+        header('Content-Type: application/json');
+        // Datatables Variables
+        $draw = intval($this->input->get("draw"));
+        $start = intval($this->input->get("start"));
+        $length = intval($this->input->get("length"));
+
+        $choice = $this->input->post("manage_choice");
+
+        if ($choice == "0") {
+            $sp = $this->Patient_model->get_prefix_list();
+            $txt = "prefix";
+        } else if ($choice == "1") {
+            $sp = $this->Patient_model->get_prefix_list();
+        } else if ($choice == "2") {
+            $sp = $this->Patient_model->get_sp_act_list();
+        } else if ($choice == "3") {
+            $sp = $this->Patient_model->get_symptom_list();
+        } else if ($choice == "4") {
+            $sp = $this->Patient_model->get_edu_list();
+        } else if ($choice == "5") {
+            $sp = $this->Patient_model->get_time_sp_list();
+        }
+
+        $data = array();
+
+        foreach ($sp as $r) {
+            if ($choice == "0") {
+                $button = " <button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-success' " .
+                        "onclick='edit_choice($r->id)' >แก้ไข</button>";
+                $cell = "<span id='rec_day_' >$r->prefix</span>";
+            } else if ($choice == "1") {
+                $button = " <button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-success' " .
+                        "onclick='edit_choice($r->id)' >แก้ไข</button>";
+                $cell = "<span id='rec_day_' >$r->prefix</span>";
+            } else if ($choice == "2") {
+                $button = " <button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-success' " .
+                        "onclick='edit_choice($r->sp_act_id)' >แก้ไข</button>";
+                $cell = "<span id='rec_day_' >$r->sp_act_name</span>";
+            } else if ($choice == "3") {
+                $button = " <button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-success' " .
+                        "onclick='edit_choice($r->symp_id)' >แก้ไข</button>";
+                $cell = "<span id='rec_day_' >$r->symp_name</span>";
+            } else if ($choice == "4") {
+                $button = " <button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-success' " .
+                        "onclick='edit_choice($r->id)' >แก้ไข</button>";
+                $cell = "<span id='rec_day_' >$r->edu_name</span>";
+            }else if ($choice == "5") {
+                $button = " <button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-success' " .
+                        "onclick='edit_choice($r->time_code)' >แก้ไข</button>";
+                $cell = "<span id='rec_day_' >$r->time_name</span>";
+            }
+            
+
+            $data[] = array(
+                $cell,
+                $button
+            );
+        }
+
+        $total = count($sp);
+
+        $output = array(
+            "draw" => $draw,
+            "recordsTotal" => $total,
+            "recordsFiltered" => $total,
+            "data" => $data
+        );
+
+        echo json_encode($output);
+        exit();
+    }
+
     public function sp_info_data_table() {
         header('Content-Type: application/json');
         // Datatables Variables
@@ -656,7 +729,7 @@ class Patient extends CI_Controller {
     }
 
     public function save_sp_info_list() {
-        //header('Content-Type: application/json');
+        header('Content-Type: application/json');
         $sp_act = $this->input->post("sp_act_list");
         $symptom_list = $this->input->post("symptom_list");
         $date = $this->input->post("date_list");
@@ -708,7 +781,19 @@ class Patient extends CI_Controller {
         } else {
             $array = $this->Patient_model->insert_sp_info_list($array);
         }
-        var_dump($array);
+        //var_dump($array);
+    }
+
+    public function add_choice() {
+        header('Content-Type: application/json');
+
+        $manage_choice = $this->input->post("manage_choice");
+        $choice_data = $this->input->post("manage_choice_data");
+
+
+        $result = $this->Patient_model->add_choice($manage_choice, $choice_data);
+
+        echo json_encode($result);
     }
 
     public function base() {

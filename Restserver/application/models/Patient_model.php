@@ -445,4 +445,106 @@ class Patient_model extends CI_Model {
         return "1";
     }
 
+    public function add_choice($choice, $ch_data) {
+
+
+        switch ($choice) {
+            case "1":
+                $this->db->where("prefix", $ch_data);
+                $query = $this->db->get("prefix");
+                if ($query->num_rows() > 0) {
+                    $array = array(
+                        "status" => "dup"
+                    );
+                } else {
+                    $arr = array(
+                        "prefix" => $ch_data
+                    );
+                    $this->db->set($arr);
+                    $this->db->insert("prefix");
+                    $array = array(
+                        "status" => "ok"
+                    );
+                }
+
+                break;
+            case "2":
+                $this->db->where("sp_act", $ch_data);
+                $query = $this->db->get("sp_act");
+                if ($query->num_rows() > 0) {
+                    $array = array(
+                        "status" => "dup"
+                    );
+                } else {
+                    $arr = array(
+                        "sp_act_name" => $ch_data
+                    );
+                    $this->db->set($arr);
+                    $this->db->insert("sp_act");
+                    $array = array(
+                        "status" => "ok"
+                    );
+                }
+                break;
+            case "3":
+                $this->db->where("symp_name", $ch_data);
+                $query = $this->db->get("symptom");
+                if ($query->num_rows() > 0) {
+                    $array = array(
+                        "status" => "dup"
+                    );
+                } else {
+                    $arr = array(
+                        "symp_name" => $ch_data
+                    );
+                    $this->db->set($arr);
+                    $this->insert("symptom");
+                    $array = array(
+                        "status" => "ok"
+                    );
+                }
+                break;
+            case "4":
+                $this->db->where("edu_name", $ch_data);
+                $query = $this->db->get("education");
+                if ($query->num_rows() > 0) {
+                    $array = array(
+                        "status" => "dup"
+                    );
+                } else {
+                    $arr = array(
+                        "edu_name" => $ch_data
+                    );
+                    $this->db->set($arr);
+                    $this->db->insert("education");
+                    $array = array(
+                        "status" => "ok"
+                    );
+                }
+                break;
+            case "5":
+                $this->db->where("time_name", $ch_data);
+                $query = $this->db->get("time_sp");
+                if ($query->num_rows > 0) {
+                    $array = array(
+                        "status" => "dup"
+                    );
+                } else {
+                    $arr = array(
+                        "time_name" => $ch_data
+                    );
+                    $this->db->set($arr);
+                    $this->db->insert("time_sp");
+                    $array = array(
+                        "status" => "ok"
+                    );
+                }
+                break;
+            default:
+                break;
+        }
+        
+        return $array;
+    }
+
 }
