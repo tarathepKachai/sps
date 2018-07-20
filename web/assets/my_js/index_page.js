@@ -94,14 +94,19 @@ $(document).ready(function () {
 
         if (val === "1") {
             opt = "prefix_list";
+            $("#choice_now").val("prefix");
         } else if (val === "2") {
             opt = "sp_act_list";
+            $("#choice_now").val("sp_act");
         } else if (val === "3") {
             opt = "symptom_list";
+            $("#choice_now").val("symptom");
         } else if (val === "4") {
             opt = "edu_list";
+            $("#choice_now").val("education");
         } else if (val === "5") {
             opt = "time_sp_list";
+            $("#choice_now").val("time_sp");
         }
 
         $.ajax({
@@ -1027,7 +1032,7 @@ function update_sp_info() {
 //            $('#search_table').DataTable().ajax.reload();
 //            $('#search_table2').DataTable().ajax.reload();
             search_submit();
-
+            get_form_option();
         }
     });
 
@@ -1059,6 +1064,7 @@ function update_sp() {
 //            $('#search_table').DataTable().ajax.reload();
 //            $('#search_table2').DataTable().ajax.reload();
             search_submit();
+            get_form_option();
         }
     });
 
@@ -1549,6 +1555,7 @@ function save_list() {
 //                $('#search_table').DataTable().ajax.reload();
 //                $('#search_table2').DataTable().ajax.reload();
                 search_submit();
+                get_form_option();
 
             }
             //console.log(data);
@@ -1557,8 +1564,49 @@ function save_list() {
 
 }
 
-function edit_choice($id) {
-    alert($id);
+function edit_choice(id) {
+    $("#form_choice")[0].reset();
+    $("#choice_modal").modal('show');
+
+    var choice = $("#choice_now").val();
+
+    $.ajax({
+        url: api_url + "api/Patient/get_choice",
+        type: "POST",
+        data: {
+            id: id,
+            choice: choice
+        },
+        success: function (data) {
+            $("#choice_data").val(data.data);
+            console.log(data);
+        }
+    });
+
+
+}
+
+function update_choice(id, choice) {
+    $.ajax({
+        url: api_url + "api/Patient/update_choice",
+        type: "POST",
+        data: $("#form_manage").serialize(),
+        success: function (data) {
+
+            $.confirm({
+                title: 'แจ้งเตือน',
+                content: 'แก้ไขสำเร็จ !',
+                type: 'green',
+                buttons: {
+                    ok: {
+                        btnClass: 'btn-green'
+                    }
+                }
+            });
+
+        }
+    });
+    get_form_option();
 }
 
 function add_choice() {
@@ -1586,9 +1634,25 @@ function add_choice() {
                             }
                         }
                     });
+                } else {
+                    $.confirm({
+
+                        title: 'แจ้งเตือน',
+                        content: 'ข้อมูลซ้ำ !',
+                        type: 'green',
+                        typeAnimated: true,
+                        buttons: {
+                            ok: {
+                                btnClass: 'btn-green',
+                            }
+                        }
+                    });
+                    get_form_option();
+                   reload_choice_table();
+
                 }
 
-                get_form_option();
+
             }
         });
     } else {
@@ -1606,6 +1670,56 @@ function add_choice() {
     }
 
 
+}
+
+function reload_choice_table() {
+    var val = $("#manage_choice").val();
+    var opt = "";
+
+    if (val === "1") {
+        opt = "prefix_list";
+        $("#choice_now").val("prefix");
+    } else if (val === "2") {
+        opt = "sp_act_list";
+        $("#choice_now").val("sp_act");
+    } else if (val === "3") {
+        opt = "symptom_list";
+        $("#choice_now").val("symptom");
+    } else if (val === "4") {
+        opt = "edu_list";
+        $("#choice_now").val("education");
+    } else if (val === "5") {
+        opt = "time_sp_list";
+        $("#choice_now").val("time_sp");
+    }
+
+    $.ajax({
+        url: api_url + "manage_choice_table",
+        type: "POST",
+        data: $("#form_manage").serialize(),
+        success: function (data) {
+            //console.log(data);
+            var len = data.length;
+            var arr = [];
+//            $('#search_table').DataTable();
+            $("#load").css("display", "block");
+            var data_ar = data.data;
+            console.log(data.data);
+            $('#manage_table').dataTable().fnClearTable();
+            $('#manage_table').dataTable().fnAddData(data.data);
+//                if (!data.result) {
+//                    $('#form_manage').dataTable().fnAddData(data);
+//
+//                } else {
+//                    console.log("not found");
+//                }
+
+            setTimeout(function () {
+                $("#load").css("display", "none");
+            }, 200);
+
+        }
+    })
 }
 
 

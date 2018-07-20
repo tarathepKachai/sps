@@ -207,14 +207,19 @@ class Patient extends CI_Controller {
             $txt = "prefix";
         } else if ($choice == "1") {
             $sp = $this->Patient_model->get_prefix_list();
+            $txt = "prefix";
         } else if ($choice == "2") {
             $sp = $this->Patient_model->get_sp_act_list();
+            $txt = "sp_act";
         } else if ($choice == "3") {
             $sp = $this->Patient_model->get_symptom_list();
+            $txt = "symptom";
         } else if ($choice == "4") {
             $sp = $this->Patient_model->get_edu_list();
+            $txt = "education";
         } else if ($choice == "5") {
             $sp = $this->Patient_model->get_time_sp_list();
+            $txt = "time_sp";
         }
 
         $data = array();
@@ -240,12 +245,12 @@ class Patient extends CI_Controller {
                 $button = " <button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-success' " .
                         "onclick='edit_choice($r->id)' >แก้ไข</button>";
                 $cell = "<span id='rec_day_' >$r->edu_name</span>";
-            }else if ($choice == "5") {
+            } else if ($choice == "5") {
                 $button = " <button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-success' " .
                         "onclick='edit_choice($r->time_code)' >แก้ไข</button>";
                 $cell = "<span id='rec_day_' >$r->time_name</span>";
             }
-            
+
 
             $data[] = array(
                 $cell,
@@ -790,7 +795,6 @@ class Patient extends CI_Controller {
         $manage_choice = $this->input->post("manage_choice");
         $choice_data = $this->input->post("manage_choice_data");
 
-
         $result = $this->Patient_model->add_choice($manage_choice, $choice_data);
 
         echo json_encode($result);
@@ -821,6 +825,23 @@ class Patient extends CI_Controller {
 
 
         echo json_encode($array);
+    }
+
+    public function update_choice() {
+        header('Content-Type: application/json');
+
+        $choice = $this->input->post("choice_now");
+        $choice_data = $this->input->post("choice_data");
+    }
+
+    public function get_choice() {
+        header('Content-Type: application/json');
+
+        $id = $this->input->post("id");
+        $choice_data = $this->input->post("choice");
+        $result = $this->Patient_model->Get_choice($id, $choice_data);
+
+        echo json_encode($result);
     }
 
 }

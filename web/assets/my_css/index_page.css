@@ -172,12 +172,15 @@ div.scrollable {
     padding-left: 3px;
     padding-right: 3px;
     margin-left:10px;
-
 }
 
 .modal-edit{
     max-width: 90%;
 
+}
+
+.modal-short{
+     max-width: 40%;
 }
 
 .modal-add{

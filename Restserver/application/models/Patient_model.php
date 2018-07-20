@@ -543,8 +543,55 @@ class Patient_model extends CI_Model {
             default:
                 break;
         }
-        
+
         return $array;
+    }
+
+    public function Get_choice($id, $choice) {
+        $field ="";
+        if ($choice == "prefix") {
+            $table = "prefix";
+            $field = "prefix";
+            $where = array(
+                "id" => $id
+            );
+        } else if ($choice == "sp_act") {
+            $table = "sp_act";
+            $where = array(
+                "sp_act_id" => $id
+            );
+            $field = "sp_act_id";
+        } else if ($choice == "symptom") {
+            $table = "symptom";
+            $field = "symp_name";
+            $where = array(
+                "symp_id" => $id
+            );
+        } else if ($choice == "education") {
+            $table = "education";
+            $field = "edu_name";
+            $where = array(
+                "id" => $id
+            );
+        } else if ($choice == "time_sp") {
+            $table = "time_sp";
+            $field = "time_name";
+            $where = array(
+                "time_code" => $id
+            );
+        }
+        $this->db->where($where);
+        $query = $this->db->get($table);
+        
+        foreach($query->result_array() as $row){
+            
+            $data = array(
+              "data" => $row[$field]  
+            );
+            
+        }
+        return $data;
+        
     }
 
 }

@@ -2,14 +2,14 @@
 <link href="<?php echo base_url("assets/my_css/index_page.css"); ?>" rel="stylesheet" >
 
 <script src="<?php echo base_url("assets/my_js/index_page.js"); ?>" ></script>
-<!--<link type="text/css" href="<?php //echo base_url();                                                                                                                          ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
+<!--<link type="text/css" href="<?php //echo base_url();                                                                                                                           ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                          ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                           ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                          ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                           ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />	
@@ -558,7 +558,7 @@
                                 <div class="row">
                                     <div class="col-md-5">
                                         <select name="manage_choice" id="manage_choice" class="form-control input-border" style="width:100%;padding-left: 10px;">
-                                           
+
                                             <option value="1">คำนำหน้าชื่อ</option>
                                             <option value="2">การกระทำ</option>
                                             <option value="3">อาการ/โรค</option>
@@ -574,24 +574,28 @@
                                         <button type="button" onclick="add_choice()" class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row" style="margin-top:10px">
                                     <div class="col" >
                                         <table  style="border: 1px solid black;width: 90%" class="table table-bordered" id="manage_table" > 
                                             <thead name="manage_head" id="manage_head" >
                                                 <tr>
-                                                    <th>test1</th>
-                                                    <th style="width:10%">test2</th>
+                                                    <th style="width:90%">รายการ</th>
+                                                    <th style="width:10%"></th>
                                                 </tr>
                                             </thead>
                                             <tbody name="manage_body" id="manage_body" >
                                                 <tr>
-                                                    <td colspan="2">
-                                                        
+                                                    <td >
+
+                                                    </td>
+                                                    <td >
+
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <input type="hidden" name="choice_now" id="choice_now" value="prefix">
                                     </div>
 
                                 </div>
