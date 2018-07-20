@@ -54,6 +54,27 @@ class Patient_model extends CI_Model {
         return $query->result();
     }
 
+    public function check_id_card($id) {
+
+        $where = array(
+            "id_card" => $id
+        );
+
+        $this->db->where($where);
+        $query = $this->db->get("person_info");
+
+        if ($query->num_rows() > 0) {
+            $array = array(
+                "status" => "2"
+            );
+        } else {
+            $array = array(
+                "status" => "1"
+            );
+        }
+        return $array;
+    }
+
     public function get_evaluation_list() {
 
         $query = $this->db->get("evaluation");
@@ -548,7 +569,7 @@ class Patient_model extends CI_Model {
     }
 
     public function Get_choice($id, $choice) {
-        $field ="";
+        $field = "";
         if ($choice == "prefix") {
             $table = "prefix";
             $field = "prefix";
@@ -582,16 +603,14 @@ class Patient_model extends CI_Model {
         }
         $this->db->where($where);
         $query = $this->db->get($table);
-        
-        foreach($query->result_array() as $row){
-            
+
+        foreach ($query->result_array() as $row) {
+
             $data = array(
-              "data" => $row[$field]  
+                "data" => $row[$field]
             );
-            
         }
         return $data;
-        
     }
 
 }

@@ -277,7 +277,7 @@ function delete_sp_info(id, person_id) {
 
     $.confirm({
         title: 'Confirm!',
-        content: 'Simple confirm!',
+        content: 'ต้องการลบ ?',
         type: "red",
         typeAnimated: true,
         buttons: {
@@ -292,8 +292,8 @@ function delete_sp_info(id, person_id) {
                     success: function (data) {
                         $.confirm({
                             title: 'แจ้งเตือน',
-                            content: 'เพิ่มข้อมูลสำเร็จ!',
-                            type: 'green',
+                            content: 'ลบสำเร็จ!',
+                            type: 'red',
                             typeAnimated: true,
                             buttons: {
                                 ok: {
@@ -305,7 +305,8 @@ function delete_sp_info(id, person_id) {
                             }
                         });
                     }
-                })
+                });
+                
             },
             ยกเลิก: function () {
 

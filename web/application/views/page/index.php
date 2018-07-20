@@ -19,9 +19,7 @@
 
 
 
-<div  class="program_header" >
-    <center><h1  >โปรแกรมผู้ป่วยจำลอง</h1></center>
-</div>
+
 
 
 <div style="padding-top : 20px ;">

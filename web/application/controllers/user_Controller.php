@@ -49,6 +49,22 @@ class user_Controller extends CI_Controller {
 
         $this->load->view("template/template", $data);
     }
+    
+    public function login() {
+
+        //$data['prefix'] = $this->get_prefix();
+//        $this->load->view("template/header");
+//
+//        $this->load->view("page/index");
+//        $this->load->view("page/modal_patient_edit");
+//        $this->load->view("page/modal_user_sp");
+//        $this->load->view("template/footer");
+
+        $data['title'] = "โปรแกรมผู้ป่วยจำลอง";
+
+
+        $this->load->view("template/template_login", $data);
+    }
 
     public function test() {
 

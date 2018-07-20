@@ -358,3 +358,16 @@ tbody .search_data tr:hover{
     text-align: center;
 }
 
+.login-form{
+    text-align: center;
+    margin:auto;
+    margin-top: 10px;
+
+    width: 60%;
+    padding-left: 10px;
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 5px;
+    
+}
+

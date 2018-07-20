@@ -263,7 +263,7 @@ $(document).ready(function () {
 
 
 
-    $("input").focusout(function () {
+    $("#patient_save input").focusout(function () {
 
         if (this.value !== '') {
             var id = this.id;
@@ -273,7 +273,7 @@ $(document).ready(function () {
         }
     });
 
-    $("textarea").focusout(function () {
+    $("#patient_save textarea").focusout(function () {
         var dd = this.style.boxShadow;
 
         if (this.value !== '') {

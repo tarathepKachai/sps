@@ -325,13 +325,18 @@ class Patient extends CI_Controller {
         $id_card = "";
 
 
+
         for ($i = 0; $i < 13; $i++) {
             $next = $i + 1;
             $temp = "txtID" . $next;
             $id_card .= $this->input->post($temp);
         }
-
-
+        $check_id_card = $this->Patient_model->check_id_card($id_card);
+        
+        if($check_id_card['status']=="2"){
+            echo json_encode($check_id_card);
+            exit();
+        }
 
         if ($this->input->post('child')) {
             $child = "1";
@@ -553,7 +558,7 @@ class Patient extends CI_Controller {
         $person_id = $this->input->post("person_id");
         $result = $this->Patient_model->delete_sp_info($sp_info_id, $person_id);
 
-        echo json_encode($array);
+        echo json_encode($result);
     }
 
     public function search_person() {
