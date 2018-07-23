@@ -13,19 +13,12 @@
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />	
-
-
+    
+    
 <!-- css end   -->
 
-
-
-
-
-
-<div style="padding-top : 20px ;">
-
+<div style="padding-top : 10px ;">
     <table class="table_main">
-
         <tbody>
             <tr>
                 <td class="menu_header">

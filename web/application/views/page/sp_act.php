@@ -15,11 +15,7 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />
 
-<div class="row" style="text-align: center">
-    <div  class="program_header" >
-        <center><h1  >โปรแกรมผู้ป่วยจำลอง</h1></center>
-    </div>
-</div>
+
 <?php
 
 function convert_date_be($date) {

@@ -332,8 +332,8 @@ class Patient extends CI_Controller {
             $id_card .= $this->input->post($temp);
         }
         $check_id_card = $this->Patient_model->check_id_card($id_card);
-        
-        if($check_id_card['status']=="2"){
+
+        if ($check_id_card['status'] == "2") {
             echo json_encode($check_id_card);
             exit();
         }
@@ -790,6 +790,11 @@ class Patient extends CI_Controller {
             exit();
         } else {
             $array = $this->Patient_model->insert_sp_info_list($array);
+            $array = array(
+                "status" => "ok"
+            );
+            echo json_encode($array);
+            exit();
         }
         //var_dump($array);
     }

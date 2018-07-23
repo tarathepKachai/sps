@@ -1722,4 +1722,8 @@ function reload_choice_table() {
     })
 }
 
+function logout() {
 
+    window.location.href = client_url + "user/logout";
+
+}
