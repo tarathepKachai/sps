@@ -659,9 +659,9 @@ class Patient_model extends CI_Model {
         }
         return $data;
     }
-    
-    public function update_choice($choice,$data,$id){
-         if ($choice == "prefix") {
+
+    public function update_choice($choice, $data, $id) {
+        if ($choice == "prefix") {
             $table = "prefix";
             $field = "prefix";
             $where = array(
@@ -692,20 +692,18 @@ class Patient_model extends CI_Model {
             $where = array(
                 "time_code" => $id
             );
-            
         }
         $arr = array(
-          $field => $data  
+            $field => $data
         );
         $this->db->where($where);
         $this->db->set($arr);
         $this->db->update($table);
         $sql = $this->db->last_query();
-        return $sql;
-        
-        
-        
-        
+
+
+        $query = $this->db->get($table);
+        return $query->result();
     }
 
 }

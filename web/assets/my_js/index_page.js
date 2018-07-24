@@ -1628,10 +1628,14 @@ function update_choice() {
                     }
                 }
             });
-
+            $("#choice_modal").modal('hide');
+            get_form_option();
+            reload_choice_table();
         }
     });
-    get_form_option();
+
+
+
 }
 
 function add_choice() {
