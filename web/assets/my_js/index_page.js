@@ -470,7 +470,7 @@ function submit() {
 
 
 
-    $('textarea').each(
+    $('form#patient_save textarea').each(
             function (i, el) {
 
                 if (!el.value || el.value === '') {
@@ -1064,6 +1064,9 @@ function update_sp() {
         data: $("#patient_edit").serialize(),
         success: function (data) {
             $("#edit_modal").modal("hide");
+            console.log(data);
+
+
             $.confirm({
                 title: 'แจ้งเตือน',
                 content: 'แก้ไขสำเร็จ !',
@@ -1582,9 +1585,9 @@ function save_list() {
 function edit_choice(id) {
     $("#form_choice")[0].reset();
     $("#choice_modal").modal('show');
-
+    $("#choice_id").val(id);
     var choice = $("#choice_now").val();
-
+    console.log(choice);
     $.ajax({
         url: api_url + "api/Patient/get_choice",
         type: "POST",
@@ -1601,11 +1604,18 @@ function edit_choice(id) {
 
 }
 
-function update_choice(id, choice) {
+function update_choice() {
+    var choice = $("#choice_now").val();
+    var choice_data = $("#choice_data").val();
+    var choice_id = $("#choice_id").val();
     $.ajax({
         url: api_url + "api/Patient/update_choice",
         type: "POST",
-        data: $("#form_manage").serialize(),
+        data: {
+            choice: choice,
+            choice_data: choice_data,
+            choice_id: choice_id
+        },
         success: function (data) {
 
             $.confirm({

@@ -167,7 +167,7 @@
                         <label for="colFormLabelSm" class="label_1">บุคคลที่สามารถติดต่อได้ในกรณีฉุกเฉิน</label>
                         <input style="margin-top: 7px" type="text" class="name_medium" name="person_em" id="person_em"> 
                         <label class="label_1" >โทรศัพท์</label>
-                        <input style="margin-top: 7px" type="text" class="name_medium" name="tel_em" id="tel_em"> 
+                        <input style="margin-top: 7px" type="text" class="name_medium" name="tel_em" maxlength="10" id="tel_em"> 
                     </div>
                     <hr>
                     <div class="col">

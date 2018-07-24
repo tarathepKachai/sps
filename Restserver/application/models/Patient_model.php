@@ -143,6 +143,7 @@ class Patient_model extends CI_Model {
         $this->db->set($array);
         $this->db->where($where);
         $this->db->update("person_info");
+        $sql = $this->db->last_query();
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE) {
             return 0;
@@ -657,6 +658,54 @@ class Patient_model extends CI_Model {
             );
         }
         return $data;
+    }
+    
+    public function update_choice($choice,$data,$id){
+         if ($choice == "prefix") {
+            $table = "prefix";
+            $field = "prefix";
+            $where = array(
+                "id" => $id
+            );
+        } else if ($choice == "sp_act") {
+            $table = "sp_act";
+
+            $where = array(
+                "sp_act_id" => $id
+            );
+            $field = "sp_act_name";
+        } else if ($choice == "symptom") {
+            $table = "symptom";
+            $field = "symp_name";
+            $where = array(
+                "symp_id" => $id
+            );
+        } else if ($choice == "education") {
+            $table = "education";
+            $field = "edu_name";
+            $where = array(
+                "id" => $id
+            );
+        } else if ($choice == "time_sp") {
+            $table = "time_sp";
+            $field = "time_name";
+            $where = array(
+                "time_code" => $id
+            );
+            
+        }
+        $arr = array(
+          $field => $data  
+        );
+        $this->db->where($where);
+        $this->db->set($arr);
+        $this->db->update($table);
+        $sql = $this->db->last_query();
+        return $sql;
+        
+        
+        
+        
     }
 
 }

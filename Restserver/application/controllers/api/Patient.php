@@ -324,19 +324,25 @@ class Patient extends CI_Controller {
         header('Content-Type: application/json');
         $id_card = "";
 
-
-
         for ($i = 0; $i < 13; $i++) {
             $next = $i + 1;
             $temp = "txtID" . $next;
             $id_card .= $this->input->post($temp);
         }
-        $check_id_card = $this->Patient_model->check_id_card($id_card);
 
-        if ($check_id_card['status'] == "2") {
-            echo json_encode($check_id_card);
-            exit();
+        if ($this->input->post("form_type") == "insert") {
+            $check_id_card = $this->Patient_model->check_id_card($id_card);
+
+            if ($check_id_card['status'] == "2") {
+                echo json_encode($check_id_card);
+                exit();
+            }
+            $exp = "0";
+        } else {
+            $exp = "1";
         }
+
+
 
         if ($this->input->post('child')) {
             $child = "1";
@@ -390,7 +396,6 @@ class Patient extends CI_Controller {
             "admission" => $this->input->post("admission"),
             "disease" => $this->input->post("disease"),
             "reason" => $this->input->post("reason"),
-            "exp" => "0",
 //            "exp_1" => $this->input->post("exp_1_detail"),
 //            "exp_2" => $this->input->post("exp_2_detail"),
 //            "exp_3" => $this->input->post("exp_3_detail"),
@@ -399,13 +404,29 @@ class Patient extends CI_Controller {
             "last_update" => date("Y-m-d H:i:s"),
             "gender" => $gender
         );
-        if ($this->input->post("form_type") == "insert") {
 
-            $result = $this->Patient_model->patient_save_data($array);
+        if ($this->input->post("form_type") == "insert") {
+            $arr_temp = array(
+                "exp" => "0"
+            );
+            $array2 = array_merge($array, $arr_temp);
+        } 
+
+
+        if ($this->input->post("form_type") != "update") {
+
+            $result = $this->Patient_model->patient_save_data($array2);
+            $txt = "insert";
         } else {
             $person_id = $this->input->post("person_id");
             $result = $this->Patient_model->patient_update_data($array, $person_id);
+            $txt = "update";
         }
+
+        $a = array(
+            "txt" => $txt,
+            "q" => $result
+        );
 
         echo json_encode($result);
     }
@@ -842,8 +863,13 @@ class Patient extends CI_Controller {
     public function update_choice() {
         header('Content-Type: application/json');
 
-        $choice = $this->input->post("choice_now");
+        $choice = $this->input->post("choice");
         $choice_data = $this->input->post("choice_data");
+        $id = $this->input->post("choice_id");
+        $result = $this->Patient_model->update_choice($choice,$choice_data,$id);
+        
+        echo json_encode($choice);
+        
     }
 
     public function get_choice() {

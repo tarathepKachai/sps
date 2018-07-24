@@ -11,13 +11,16 @@
                 <form id="form_choice">
                     <div class="col-md-12">
                         <input type="text" class="form-control" id="choice_data" name="choice_data" >
+                        <input type="hidden"  id="choice_id" name="choice_id" >
+                        <input type="hidden"  id="choice_now" name="choice_now" >
+
                     </div>
                 </form>
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="update_choice()">Save changes</button>
             </div>
         </div>
     </div>
