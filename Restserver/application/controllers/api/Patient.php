@@ -576,7 +576,7 @@ class Patient extends CI_Controller {
         $symptom = $this->input->post("symptom");
         $day1 = $this->input->post("day1");
         $day2 = $this->input->post("day2");
-
+        $eva_check = $this->input->post("eva_check");
 
 
         if ($day1 != null && $day1 != "") {
@@ -599,7 +599,8 @@ class Patient extends CI_Controller {
             "sp_act" => $sp_act,
             "symptom" => $symptom,
             "day1" => $day1,
-            "day2" => $day2
+            "day2" => $day2,
+            "eva_check" => $eva_check
         );
 
         $result = $this->Patient_model->search_person($array, $option);
@@ -660,7 +661,7 @@ class Patient extends CI_Controller {
         $symptom = $this->input->post("symptom");
         $day1 = $this->input->post("day1");
         $day2 = $this->input->post("day2");
-
+        $eva_check = $this->input->post("eva_check");
 
 
         if ($day1 != null && $day1 != "") {
@@ -683,7 +684,8 @@ class Patient extends CI_Controller {
             "sp_act" => $sp_act,
             "symptom" => $symptom,
             "day1" => $day1,
-            "day2" => $day2
+            "day2" => $day2,
+            "eva_check" => $eva_check
         );
 
         $result = $this->Patient_model->search_sp_info($array, $option);

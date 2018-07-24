@@ -32,7 +32,7 @@ class user_Controller extends CI_Controller {
 
     public function index() {
 
-        if ($_SESSION['logged_in'] == false) {
+        if (!isset($_SESSION['logged_in'])) {
             redirect('/user/login');
         } else {
             redirect('/user/index');

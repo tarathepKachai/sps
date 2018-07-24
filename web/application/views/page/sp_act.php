@@ -96,7 +96,7 @@ function convert_date_be($date) {
                         &nbsp;
                         <label class="label_1">การประเมิน</label> 
                         <select id="evaluation" name="evaluation" class="input-border" >
-                            <option value="" >--เลือก--</option>
+                            <option value="0" >--เลือก--</option>
                         </select>
 
                         <input type="hidden" name="person_id" id="person_id" >

@@ -2,19 +2,19 @@
 <link href="<?php echo base_url("assets/my_css/index_page.css"); ?>" rel="stylesheet" >
 
 <script src="<?php echo base_url("assets/my_js/index_page.js"); ?>" ></script>
-<!--<link type="text/css" href="<?php //echo base_url();                                                                                                                           ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
+<!--<link type="text/css" href="<?php //echo base_url();                                                                                                                              ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                           ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                              ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                           ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                              ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />	
-    
-    
+
+
 <!-- css end   -->
 
 <div style="padding-top : 10px ;">
@@ -337,6 +337,12 @@
                                                         แก้ไข
                                                     </button>-->
                             <input type="hidden" name="option" id="option" value="1" >
+                            <br>
+                            <label class="label_1">การประเมิน</label> &nbsp;
+                            &nbsp;<label> <input type="radio" name="eva_check"  class="radio_but" value="3" > เลือกรายการทั้งหมด </label> 
+                            &nbsp;<label> <input type="radio" name="eva_check"  class="radio_but" value="1" > รายการที่ประเมินแล้ว </label> 
+                            &nbsp;<label > <input type="radio" name="eva_check"  class="radio_but" value="2" > รายการที่ยังไม่ได้ประเมินประเมิน </label> 
+
                             <div id="search_1" class="col" style="padding-left: 10px"  >
                                 <a onClick="more_opt()"  href="#" id="more_opt" style="font-size: 15px" >ตัวเลือกการค้นหาเพิ่มเติม</a> <br>
                                 <div style="margin-top:10px;display:none" id="more_sec"  >
@@ -363,6 +369,7 @@
                                     <div class="col" style="padding-top:5px">
                                         <label class="label_1">วันที่ </label> <input type="text" name="day1" id="day1" class="rec_day" >
                                         &nbsp; <label class="label_1">ถึง </label>&nbsp; <input type="text" name="day2" id="day2" class="rec_day" >
+                                        &nbsp; 
                                     </div>
                                 </div>
                             </div>

@@ -316,36 +316,59 @@ class Patient_model extends CI_Model {
             $this->db->where("lname", $array['lname']);
         }
 
+        if ($array['eva_check'] == '1') {
+            $ev = "evaluation <> '0'";
+            $this->db->where($ev);
+        } else if ($array['eva_check'] == "2") {
+            $ev = "evaluation = '0'";
+            $this->db->where($ev);
+        }
+
         if ($option == "2") {
             if ($array['gender'] != "0") {
                 $this->db->where("gender", $array['gender']);
             }
-            if (($array['age1'] != null && $array['age1'] != "") && ($array['age2'] != null && $array['age2'] != "")) {
-                $arr = array(
-                    "age >= " => $array['age1'],
-                    "age <= " => $array['age2']
-                );
+            if (($array['age1'] != null && $array['age1'] != "")) {
+                if (($array['age1'] != null && $array['age1'] != "") && ($array['age2'] != null && $array['age2'] != "")) {
+//                    $arr = array(
+//                        "age >= " => $array['age1'],
+//                        "age <= " => $array['age2']
+//                    );
 
-                $age1 = $array['age1'] - 1;
-                $age2 = $array['age2'];
+                    $age1 = $array['age1'] - 1;
+                    $age2 = $array['age2'];
 
-                $con = "birthday between date_add( curdate(), interval -$age2 year )
+                    $con = "birthday between date_add( curdate(), interval -$age2 year )
                        and date_add( curdate(), interval -$age1 year )";
+                } else {
+                    $con = "(YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5))) = '$array[age1]'";
+                }
+
                 $this->db->where($con);
             }
-            if ($array['weight1'] != "" && $array['weight2'] != "" && $array['weight1'] != null && $array['weight2'] != null) {
-                if ($array['weight1'] > $array['weight2']) {
-                    $temp = $array['weight1'];
-                    $array['weight1'] = $array['weight1'];
-                    $array['weight2'] = $temp;
+            if ($array['weight1'] != "" && $array['weight1'] != null) {
+//$this->db->where("weight", $array['weight1']);
+
+                if ($array['weight1'] != "" && $array['weight1'] != null && $array['weight2'] != "" && $array['weight2'] != null) {
+                    if ($array['weight1'] > $array['weight2']) {
+                        $temp = $array['weight1'];
+                        $array['weight1'] = $array['weight1'];
+                        $array['weight2'] = $temp;
+                    }
+                    $this->db->where("weight between $array[weight1] and $array[weight2]");
+                } else {
+                    $this->db->where("weight", $array['weight1']);
                 }
-                $this->db->where("weight between $array[weight1] and $array[weight2]");
             }
 
-            if ($array['day1'] != "" && $array['day2'] != "" && $array['day1'] != null && $array['day2'] != null) {
-                $day2 = date('Y-m-d', strtotime($array['day2'] . "+1 days"));
-                $day1 = $array['day1'];
-                $this->db->where(" date between '$day1' and '$day2' ");
+            if ($array['day1'] != "" && $array['day1'] != null) {
+                if ($array['day1'] != "" && $array['day1'] != null && $array['day2'] != null && $array['day2'] != "") {
+                    $day2 = date('Y-m-d', strtotime($array['day2'] . "+1 days"));
+                    $day1 = $array['day1'];
+                    $this->db->where(" rec_day between '$day1' and '$day2' ");
+                } else {
+                    $this->db->where(" rec_day = '$array[day1]' ");
+                }
             }
 
             if ($array['sp_act'] != "" && $array['sp_act'] != null && $array['sp_act'] != "0") {
@@ -394,36 +417,60 @@ class Patient_model extends CI_Model {
             $this->db->where("lname", $array['lname']);
         }
 
+        if ($array['eva_check'] == '1') {
+            $ev = "evaluation <> '0'";
+            $this->db->where($ev);
+        } else if ($array['eva_check'] == "2") {
+            $ev = "evaluation = '0'";
+            $this->db->where($ev);
+        }
+
         if ($option == "2") {
             if ($array['gender'] != "0") {
                 $this->db->where("gender", $array['gender']);
             }
-            if (($array['age1'] != null && $array['age1'] != "") && ($array['age2'] != null && $array['age2'] != "")) {
-                $arr = array(
-                    "age >= " => $array['age1'],
-                    "age <= " => $array['age2']
-                );
+            if (($array['age1'] != null && $array['age1'] != "")) {
+                if (($array['age1'] != null && $array['age1'] != "") && ($array['age2'] != null && $array['age2'] != "")) {
+                    $arr = array(
+                        "age >= " => $array['age1'],
+                        "age <= " => $array['age2']
+                    );
 
-                $age1 = $array['age1'] - 1;
-                $age2 = $array['age2'];
+                    $age1 = $array['age1'] - 1;
+                    $age2 = $array['age2'];
 
-                $con = "birthday between date_add( curdate(), interval -$age2 year )
+                    $con = "birthday between date_add( curdate(), interval -$age2 year )
                        and date_add( curdate(), interval -$age1 year )";
+                } else {
+                    $con = "(YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5))) = '$array[age1]' ";
+                }
+
                 $this->db->where($con);
             }
-            if ($array['weight1'] != "" && $array['weight2'] != "" && $array['weight1'] != null && $array['weight2'] != null) {
-                if ($array['weight1'] > $array['weight2']) {
-                    $temp = $array['weight1'];
-                    $array['weight1'] = $array['weight1'];
-                    $array['weight2'] = $temp;
+            if ($array['weight1'] != "" && $array['weight1'] != null) {
+                //$this->db->where("weight", $array['weight1']);
+
+                if ($array['weight1'] != "" && $array['weight1'] != null && $array['weight2'] != "" && $array['weight2'] != null) {
+                    if ($array['weight1'] > $array['weight2']) {
+                        $temp = $array['weight1'];
+                        $array['weight1'] = $array['weight1'];
+                        $array['weight2'] = $temp;
+                    }
+                    //$this->db->where("weight", $array['weight1']);
+                    $this->db->where("weight between $array[weight1] and $array[weight2]");
+                } else {
+                    $this->db->where("weight", $array['weight1']);
                 }
-                $this->db->where("weight between $array[weight1] and $array[weight2]");
             }
 
-            if ($array['day1'] != "" && $array['day2'] != "" && $array['day1'] != null && $array['day2'] != null) {
-                $day2 = date('Y-m-d', strtotime($array['day2'] . "+1 days"));
-                $day1 = $array['day1'];
-                $this->db->where(" date between '$day1' and '$day2' ");
+            if ($array['day1'] != "" && $array['day1'] != null) {
+                if ($array['day1'] != "" && $array['day1'] != null && $array['day2'] != null && $array['day2'] != "") {
+                    $day2 = date('Y-m-d', strtotime($array['day2'] . "+1 days"));
+                    $day1 = $array['day1'];
+                    $this->db->where(" date between '$day1' and '$day2' ");
+                } else {
+                    $this->db->where(" date = '$array[day1]' ");
+                }
             }
 
             if ($array['sp_act'] != "" && $array['sp_act'] != null && $array['sp_act'] != "0") {
@@ -433,10 +480,8 @@ class Patient_model extends CI_Model {
             if ($array['symptom'] != "" && $array['symptom'] != null && $array['symptom'] != "0") {
                 $this->db->where("s.symp_id", $array['symptom']);
             }
-        } else {
-            
         }
-
+        $this->db->order_by("date", "desc");
         $result = $this->db->get("sp_info");
         $sql = $this->db->last_query();
 
@@ -578,10 +623,11 @@ class Patient_model extends CI_Model {
             );
         } else if ($choice == "sp_act") {
             $table = "sp_act";
+
             $where = array(
                 "sp_act_id" => $id
             );
-            $field = "sp_act_id";
+            $field = "sp_act_name";
         } else if ($choice == "symptom") {
             $table = "symptom";
             $field = "symp_name";

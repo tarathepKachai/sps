@@ -590,7 +590,7 @@ function search_submit() {
             } else {
                 //console.log("not found");
             }
-
+            console.log(data);
             setTimeout(function () {
                 $("#load").css("display", "none");
             }, 300);
@@ -1010,31 +1010,46 @@ function edit_sp_info(id) {
 }
 
 function update_sp_info() {
-
-    $.ajax({
-        url: api_url + "update_sp_info",
-        type: "POST",
-        data: $("#form_sp_info").serialize(),
-        success: function (data) {
-            $("#sp_info_modal").modal("hide");
-            $.confirm({
-                title: 'แจ้งเตือน',
-                content: 'แก้ไขสำเร็จ !',
-                type: 'green',
-                typeAnimated: true,
-                buttons: {
-                    ok: {
-                        btnClass: 'btn-green',
-                    }
-
+    if ($("#sp_act_m").val() === "0" || $("#symptom_m").val() === "0") {
+        $.confirm({
+            title: 'แจ้งเตือน',
+            content: 'กรุณาเลือกข้อมูล !',
+            type: 'red',
+            typeAnimated: true,
+            buttons: {
+                ok: {
+                    btnClass: 'btn-green',
                 }
-            });
+
+            }
+        });
+    } else {
+        $.ajax({
+            url: api_url + "update_sp_info",
+            type: "POST",
+            data: $("#form_sp_info").serialize(),
+            success: function (data) {
+                $("#sp_info_modal").modal("hide");
+                $.confirm({
+                    title: 'แจ้งเตือน',
+                    content: 'แก้ไขสำเร็จ !',
+                    type: 'green',
+                    typeAnimated: true,
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-green',
+                        }
+
+                    }
+                });
 //            $('#search_table').DataTable().ajax.reload();
 //            $('#search_table2').DataTable().ajax.reload();
-            search_submit();
-            get_form_option();
-        }
-    });
+                search_submit();
+                get_form_option();
+            }
+        });
+    }
+
 
 
 }
@@ -1648,7 +1663,7 @@ function add_choice() {
                         }
                     });
                     get_form_option();
-                   reload_choice_table();
+                    reload_choice_table();
 
                 }
 
