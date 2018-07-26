@@ -178,7 +178,8 @@ $(document).ready(function () {
                     exportOptions: {
                         modifier: {
                             page: 'current'
-                        }
+                        },
+                        columns: ':visible'
                     }
                 }, {
                     extend: 'colvis',
@@ -217,7 +218,8 @@ $(document).ready(function () {
                     }, exportOptions: {
                         modifier: {
                             page: 'current'
-                        }
+                        },
+                        columns: ':visible'
                     }
                 }, {
                     extend: 'colvis',
