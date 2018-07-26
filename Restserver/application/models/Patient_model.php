@@ -34,7 +34,7 @@ class Patient_model extends CI_Model {
     public function get_sp_list($type) {
 //        $sql = 'SELECT * FROM person_info ps INNER JOIN prefix p on ps.prefix = p.id ';
 //        $query = $this->db->query("person_info");
-        $this->db->select('*, YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) as age ');
+        $this->db->select('*, FLOOR(TIMESTAMPDIFF(hour, birthday, CURDATE())/8766) as age ');
         $this->db->from('person_info');
         $this->db->join('prefix', 'person_info.prefix = prefix.id');
         switch ($type) {
@@ -300,7 +300,7 @@ class Patient_model extends CI_Model {
     }
 
     public function search_person($array, $option) {
-        $this->db->select('*, YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) as age, p.person_id as p_id');
+        $this->db->select('*,  FLOOR(TIMESTAMPDIFF(hour,  p.birthday, CURDATE())/8766) as age, p.person_id as p_id');
         $this->db->from("person_info p");
         $this->db->join('prefix', 'p.prefix = prefix.id');
         $this->db->join('sp_info', 'p.person_id = sp_info.person_id', 'left');
@@ -336,13 +336,14 @@ class Patient_model extends CI_Model {
 //                        "age <= " => $array['age2']
 //                    );
 
-                    $age1 = $array['age1'] - 1;
-                    $age2 = $array['age2'];
+                    $age1 = $array['age1'] ;
+                    $age2 = $array['age2'] + 1;
 
-                    $con = "birthday between date_add( curdate(), interval -$age2 year )
-                       and date_add( curdate(), interval -$age1 year )";
+                    $con = " p.birthday between date_add( curdate(), interval -" . $age2 . " year )
+                       and date_add( curdate(), interval -" . $age1 . " year )";
                 } else {
-                    $con = "(YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5))) = '$array[age1]'";
+                    $con = "(FLOOR(TIMESTAMPDIFF(hour,  p.birthday, CURDATE())/8766)) = '$array[age1]'";
+                    // YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5))
                 }
 
                 $this->db->where($con);
@@ -364,7 +365,7 @@ class Patient_model extends CI_Model {
 
             if ($array['day1'] != "" && $array['day1'] != null) {
                 if ($array['day1'] != "" && $array['day1'] != null && $array['day2'] != null && $array['day2'] != "") {
-                    $day2 = date('Y-m-d', strtotime($array['day2'] . "+1 days"));
+                    $day2 = date('Y-m-d', strtotime($array['day2']));
                     $day1 = $array['day1'];
                     $this->db->where(" rec_day between '$day1' and '$day2' ");
                 } else {
@@ -388,6 +389,7 @@ class Patient_model extends CI_Model {
 
         if ($result->num_rows() > 0) {
             $data = $result->result();
+            
         } else {
             $data = array(
                 "error" => "data's not found"
@@ -398,8 +400,8 @@ class Patient_model extends CI_Model {
     }
 
     public function search_sp_info($array, $option) {
-        $this->db->select('*, YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) as age');
-
+        $this->db->select('*,  FLOOR(TIMESTAMPDIFF(hour, birthday, CURDATE())/8766) as age');
+        
         $this->db->join('person_info', 'person_info.person_id = sp_info.person_id');
         $this->db->join('prefix', 'person_info.prefix = prefix.id');
         $this->db->join('symptom s', 'sp_info.symp_id = s.symp_id');
@@ -437,13 +439,13 @@ class Patient_model extends CI_Model {
                         "age <= " => $array['age2']
                     );
 
-                    $age1 = $array['age1'] - 1;
-                    $age2 = $array['age2'];
+                    $age1 = $array['age1'] ;
+                    $age2 = $array['age2'] + 1;
 
                     $con = "birthday between date_add( curdate(), interval -$age2 year )
                        and date_add( curdate(), interval -$age1 year )";
                 } else {
-                    $con = "(YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5))) = '$array[age1]' ";
+                    $con = "(FLOOR(TIMESTAMPDIFF(hour,  birthday, CURDATE())/8766)) = '$array[age1]'";
                 }
 
                 $this->db->where($con);
@@ -466,7 +468,7 @@ class Patient_model extends CI_Model {
 
             if ($array['day1'] != "" && $array['day1'] != null) {
                 if ($array['day1'] != "" && $array['day1'] != null && $array['day2'] != null && $array['day2'] != "") {
-                    $day2 = date('Y-m-d', strtotime($array['day2'] . "+1 days"));
+                    $day2 = date('Y-m-d', strtotime($array['day2']));
                     $day1 = $array['day1'];
                     $this->db->where(" date between '$day1' and '$day2' ");
                 } else {

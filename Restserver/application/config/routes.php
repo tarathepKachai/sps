@@ -88,6 +88,8 @@ $route['update_evaluation'] = "api/Patient/update_evaluation";
 $route['update_symptom'] = "api/Patient/update_symptom";
 $route['update_sp_act'] = "api/Patient/update_sp_act";
 $route['save_comment'] = "api/Patient/save_comment";
+$route['save_date_sp_info'] = "api/Patient/save_date_sp_info";
+
 $route['delete_sp_info'] = 'api/Patient/delete_sp_info';
 $route['update_sp_info'] = 'api/Patient/update_sp_info';
 $route['save_sp_info_list'] = 'api/Patient/save_sp_info_list';

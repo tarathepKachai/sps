@@ -17,7 +17,10 @@ today = dd + '/' + mm + '/' + yyyy;
 $(document).ready(function () {
 
     //console.log(api_url);
+    var dt = new Date();
+    var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 
+    //alert(time);
     $('.modal-switch-btn').click(function () {
         var prevPopup = $(this).attr("data-previouspopup-toggle");
         $(prevPopup).modal('show');
@@ -51,7 +54,7 @@ $(document).ready(function () {
 
     $('#manage_table').dataTable({
         "pageLength": 5,
-
+        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
         "ajax": {
             url: api_url + "api/Patient/manage_choice_table",
             type: 'POST',
@@ -143,7 +146,7 @@ $(document).ready(function () {
     //$('#example').DataTable();
     var myTable = $('#search_table').dataTable({
         "pageLength": 10,
-
+        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
         "ajax": {
             url: api_url + "api/Patient/sp_data_table",
             type: 'POST',
@@ -186,6 +189,7 @@ $(document).ready(function () {
 
     var myTable2 = $('#search_table2').DataTable({
         "pageLength": 10,
+        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
         "ajax": {
             url: api_url + "sp_info_data_table",
             type: 'GET',
@@ -409,6 +413,8 @@ $(document).ready(function () {
     });
 
 
+    $("form").attr('autocomplete', 'off');
+
 });
 
 function submit() {
@@ -577,8 +583,9 @@ function search_submit() {
         data: $("#search_form").serialize(),
         success: function (data) {
 
-            var len = data.length;
-            var arr = [];
+            console.log(data);
+
+
 //            $('#search_table').DataTable();
             $("#load").css("display", "block");
 
@@ -590,7 +597,7 @@ function search_submit() {
             } else {
                 //console.log("not found");
             }
-            console.log(data);
+
             setTimeout(function () {
                 $("#load").css("display", "none");
             }, 300);
@@ -604,7 +611,7 @@ function search_submit() {
         data: $("#search_form").serialize(),
         success: function (data) {
 
-            console.log(data.length);
+            //console.log(data.length);
             console.log(data);
             var len = data.length;
             var arr = [];

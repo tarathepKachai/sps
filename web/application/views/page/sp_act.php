@@ -6,11 +6,11 @@
 
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                                            ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                                             ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                                            ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                                             ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />
@@ -156,6 +156,37 @@ function convert_date_be($date) {
 
 <!--   /////////////////////////////////////////   MODAL COMMENT END  /////////////////////////////////////////////////////////////////   -->
 
+<!--   /////////////////////////////////////////   MODAL DATE START  /////////////////////////////////////////////////////////////////   -->
+
+<div class="modal fade" id="date_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-comment" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">แก้ไขวันที่</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="date_form" >
+                    <!--/////////////////////////////////////////////////  FORM ///////////////////////////////////////////////////////////////-->
+                    <input type="hidden" name="sp_info_id" id="sp_info_id" >
+                    <div class="col">
+
+                        <label class="label_1">หมายเหตุ</label>
+                        <input type="text" class="form-control" style="border-color: black;" id="date_edit" name="date_edit" >
+                    </div>
+                    <!--/////////////////////////////////////////////////  FORM ///////////////////////////////////////////////////////////////-->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-primary" onclick="save_date()">บันทึก</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--   /////////////////////////////////////////   MODAL DATE END  /////////////////////////////////////////////////////////////////   -->
 
 
 <script>
@@ -185,6 +216,7 @@ function convert_date_be($date) {
         $("#patient_edit input#rec_day_s").datepicker();
         $("#patient_edit input#birthday_s").datepicker();
 
+        $("#date_edit").datepicker();
 
         //$("#patient_save input#searc").datepicker();
 
@@ -214,10 +246,8 @@ function convert_date_be($date) {
         $("#patient_edit input#rec_day_s").datepicker("setDate", new Date());
         $("#patient_edit input#birthday_s").datepicker("setDate", new Date());
 
-
-
         $("#person_id").val(person_id);
-
+        $("#date_edit").datepicker("setDate", new Date());
         $.ajax({
             url: api_url + "get_sp_data",
             type: "POST",
@@ -232,23 +262,23 @@ function convert_date_be($date) {
 
             }
         });
-        
-        
+
+
         $.ajax({
-        url: api_url + "sp_act_list",
-        type: "get",
-        success: function (data) {
-            var txt = "";
-     
+            url: api_url + "sp_act_list",
+            type: "get",
+            success: function (data) {
+                var txt = "";
 
-            $.each(data, function (idx, obj) {
-                txt += '<label >' + obj.sp_act_name + '</label>';
-                txt += '<textarea  class="form-control" readonly style="background-color:white" name="exp_' + obj.sp_act_id + '_detail" id="exp_' + obj.sp_act_id + '_detail"></textarea> ';
-            });
 
-            $("#exp_d").append(txt);
-        }
-    });
+                $.each(data, function (idx, obj) {
+                    txt += '<label >' + obj.sp_act_name + '</label>';
+                    txt += '<textarea  class="form-control" readonly style="background-color:white" name="exp_' + obj.sp_act_id + '_detail" id="exp_' + obj.sp_act_id + '_detail"></textarea> ';
+                });
+
+                $("#exp_d").append(txt);
+            }
+        });
 
         $.ajax({
             url: api_url + "get_sp_info_by_id",
@@ -267,7 +297,7 @@ function convert_date_be($date) {
                         str = "";
                         str += "<tr>";
                         str += "<td>";
-                        str += convert_date_ad(obj.date);
+                        str += "<input type ='text' onclick='date_sp(" + obj.sp_info_id + ")' id='date_" + obj.sp_info_id + "' name='date_" + obj.sp_info_id + "' style='text-align:center;' value='" + convert_date_ad(obj.date) + "' >";
                         str += "</td>";
                         str += "<td>";
                         str += "<select id='act_" + obj.sp_info_id + "' style='position:relative;width:95%;' name='act_" + obj.sp_info_id + "' onChange='act_update(this.id)' ></select> ";
@@ -285,7 +315,7 @@ function convert_date_be($date) {
                         //str += obj.comment;
                         str += "</td>";
                         str += "<td>";
-                        str += "<button class='btn btn-danger' style='' onClick='delete_sp_info(this.id,"+obj.person_id+")' id='" + obj.sp_info_id + "' > ลบ </button>";
+                        str += "<button class='btn btn-danger' style='' onClick='delete_sp_info(this.id," + obj.person_id + ")' id='" + obj.sp_info_id + "' > ลบ </button>";
                         str += "</td>";
 
                         $("#sp_info_data").append(str);

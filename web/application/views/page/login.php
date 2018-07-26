@@ -75,7 +75,7 @@
 <script >
 
     $(document).ready(function () {
-
+        
         $("#login_form").submit(function (e) {
 
             e.preventDefault();
@@ -140,6 +140,8 @@
 //            });
 
         });
+        
+         $("form").attr('autocomplete', 'off');
     });
 
 </script>

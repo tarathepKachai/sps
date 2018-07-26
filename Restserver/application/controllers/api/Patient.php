@@ -410,7 +410,7 @@ class Patient extends CI_Controller {
                 "exp" => "0"
             );
             $array2 = array_merge($array, $arr_temp);
-        } 
+        }
 
 
         if ($this->input->post("form_type") != "update") {
@@ -514,12 +514,13 @@ class Patient extends CI_Controller {
         $symptom = $this->input->post("symptom");
         $evaluation = $this->input->post("evaluation");
         $comment = $this->input->post("comment");
-
+        $date = $this->convert_date_ad($this->input->post("date"));
         $array = array(
             "sp_act_id" => $sp_act_id,
             "symp_id" => $symptom,
             "evaluation" => $evaluation,
-            "comment" => $comment
+            "comment" => $comment,
+            "date" => $date
         );
 
         $result = $this->Patient_model->update_sp_info($array, $sp_info_id);
@@ -566,6 +567,20 @@ class Patient extends CI_Controller {
 
         $array = array(
             "comment" => $comment
+        );
+
+        $result = $this->Patient_model->update_sp_info($array, $sp_info_id);
+
+        echo json_encode($result);
+    }
+
+    public function save_date_sp_info() {
+        header('Content-Type: application/json');
+        $sp_info_id = $this->input->post("sp_info_id");
+        //$date = $this->input->post("date");
+         $date = $this->convert_date_ad($this->input->post("date"));
+        $array = array(
+            "date" => $date
         );
 
         $result = $this->Patient_model->update_sp_info($array, $sp_info_id);
@@ -866,10 +881,9 @@ class Patient extends CI_Controller {
         $choice = $this->input->post("choice");
         $choice_data = $this->input->post("choice_data");
         $id = $this->input->post("choice_id");
-        $result = $this->Patient_model->update_choice($choice,$choice_data,$id);
-        
+        $result = $this->Patient_model->update_choice($choice, $choice_data, $id);
+
         echo json_encode($choice);
-        
     }
 
     public function get_choice() {

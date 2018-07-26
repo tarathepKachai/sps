@@ -332,7 +332,7 @@
                             <input type="text" name="id_search" id="id_search" maxlength="13" class="text_short" style="width: 130px">   
                             &nbsp; <label class="label_1">ชื่อ</label>&nbsp; <input type="text" name="name_search" id="name_search" class="name_medium">   &nbsp;
                             &nbsp; <label class="label_1">นามสกุล</label> &nbsp;<input type="text" name="lastname_search" id="lastname_search" class="name_medium">   &nbsp;
-                            <button type="button"  onclick="search_submit()" class="button-search" >ค้นหา</button>
+                            <button type="button"  onclick="search_submit()" class="btn btn-primary" >ค้นหา</button>
                             <!--                        <button type="button" style="height: 30px;padding: 2px;" class="btn btn-success" data-toggle="modal" data-target="#sp_modal">
                                                         แก้ไข
                                                     </button>-->
@@ -341,7 +341,7 @@
                             <label class="label_1">การประเมิน</label> &nbsp;
                             &nbsp;<label> <input type="radio" name="eva_check"  class="radio_but" value="3" > เลือกรายการทั้งหมด </label> 
                             &nbsp;<label> <input type="radio" name="eva_check"  class="radio_but" value="1" > รายการที่ประเมินแล้ว </label> 
-                            &nbsp;<label > <input type="radio" name="eva_check"  class="radio_but" value="2" > รายการที่ยังไม่ได้ประเมินประเมิน </label> 
+                            &nbsp;<label > <input type="radio" name="eva_check"  class="radio_but" value="2" > รายการที่ยังไม่ได้ประเมิน </label> 
 
                             <div id="search_1" class="col" style="padding-left: 10px"  >
                                 <a onClick="more_opt()"  href="#" id="more_opt" style="font-size: 15px" >ตัวเลือกการค้นหาเพิ่มเติม</a> <br>
@@ -569,7 +569,7 @@
 
                                     </div>
                                     <div class="col-md-1" style="text-align:center">
-                                        <button type="button" onclick="add_choice()" class="btn btn-primary">บันทึก</button>
+                                        <button type="button" onclick="add_choice()" class="btn btn-primary">เพิ่ม</button>
                                     </div>
                                 </div>
 

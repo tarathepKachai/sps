@@ -12,6 +12,11 @@ body {
     background-color: #ccffcc;
 }
 
+option {
+background-color: #cccccc;
+color:black;
+}
+
 .program_header {
     text-align: center;
     margin:auto;

@@ -10,7 +10,7 @@ $(document).ready(function () {
         $("#patient_edit textarea[name=exp_4_detail]").text("");
     });
 
-
+    $("form").attr('autocomplete', 'off');
 });
 
 
@@ -132,6 +132,22 @@ function comment_sp(id) {
     var comment = $("#input_comment_" + temp_com[1]).val();
 
     $("#comment_edit").val(comment);
+
+}
+
+function date_sp(id) {
+
+    $("#date_modal").modal("show");
+    $("#date_form")[0].reset();
+
+   
+    var data = id;
+    //console.log(data);
+    $("#sp_info_id").val(data);
+    var comment = $("#date_" + data).val();
+    console.log(comment);
+    $("#date_edit").val(comment);
+     console.log($("#date_edit").val());
 
 }
 
@@ -271,6 +287,44 @@ function save_comment() {
     });
 }
 
+function save_date() {
+    //console.log(sp_info_id);
+    //var temp = sp_info_id.split("_");
+    var id = $("#sp_info_id").val();
+
+    var date = $("#date_edit").val();
+
+    $.ajax({
+        url: api_url + "save_date_sp_info",
+        type: "POST",
+        data: {
+            date: date,
+            sp_info_id: id
+        },
+        success: function (data) {
+
+            if (date === null || date === "") {
+                $("#date_" + id).val("");
+            } else {
+                $("#date_" + id).val(date);
+            }
+
+            $.confirm({
+                title: 'แจ้งเตือน',
+                content: 'แก้ไขสำเร็จ !',
+                type: 'green',
+                typeAnimated: true,
+                buttons: {
+                    ok: {
+                        btnClass: 'btn-green'
+                    }
+                }
+            });
+            $("#date_modal").modal("hide");
+        }
+    });
+}
+
 function delete_sp_info(id, person_id) {
 
     //console.log(id);
@@ -306,7 +360,7 @@ function delete_sp_info(id, person_id) {
                         });
                     }
                 });
-                
+
             },
             ยกเลิก: function () {
 

@@ -58,7 +58,19 @@ function login() {
                 });
 
             } else if (data.c === 1) {
-                alert("wrong");
+                $.confirm({
+                    title: 'แจ้งเตือน',
+                    content: 'ชื่อผู้ใช้งาน/รหัสผ่านไม่ถูกต้อง',
+                    type: 'red',
+                    typeAnimated: true,
+                    buttons: {
+                        ok: {
+                            btnClass: 'btn-red',
+
+                        }
+
+                    }
+                });
             }
 
         }, error: function (xx, yy, zz) {
