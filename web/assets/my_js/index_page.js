@@ -574,8 +574,6 @@ function check_submit() {
 
 }
 
-
-
 function search_submit() {
     var s_opt = $("#search_option").val();
 
@@ -586,7 +584,6 @@ function search_submit() {
         success: function (data) {
 
             console.log(data);
-
 
 //            $('#search_table').DataTable();
             $("#load").css("display", "block");
@@ -1299,6 +1296,19 @@ function get_form_option() {
 //                $('#sp_act_list').append('<option value="' + obj.sp_act_id + '" >' + obj.sp_act_name + '</option>');
             });
             $('#sp_act_list').html(str);
+
+            str = "";
+            j = "1";
+            $.each(data, function (idx, obj) {
+                if (j === "1") {
+                    str += '<option value="0" >เลือกการกระทำ</option>';
+                    j++;
+                }
+                str += '<option value="' + obj.sp_act_id + '" >' + obj.sp_act_name + '</option>';
+//                $('#sp_act_list').append('<option value="' + obj.sp_act_id + '" >' + obj.sp_act_name + '</option>');
+            });
+            $('#sp_act_first').html(str);
+
             txt = "";
             $.each(data, function (idx, obj) {
                 txt += '<label >' + obj.sp_act_name + '</label>';
@@ -1355,6 +1365,20 @@ function get_form_option() {
 //                $("#symptom_list").append('<option value="' + obj.symp_id + '" >' + obj.symp_name + '</option>');
             });
             $("#symptom_list").html(str);
+
+            str = "";
+            j = "1";
+            $.each(data, function (idx, obj) {
+
+                if (j === "1") {
+                    str += '<option value="0" >--กรุณาเลือกอาการ/โรค--</option>'
+                    j++;
+                }
+                str += '<option value="' + obj.symp_id + '" >' + obj.symp_name + '</option>';
+
+                // $("#symptom_m").append('<option value="' + obj.symp_id + '" >' + obj.symp_name + '</option>');
+            });
+            $("#symptom_first").html(str);
 
         }
 

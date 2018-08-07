@@ -428,6 +428,18 @@ class Patient extends CI_Controller {
             "q" => $result
         );
 
+        // insert sp_info
+        $array2 = array(
+            "date" => $rec_day,
+            "person_id" => $person_id,
+            "sp_act_id" => $this->input->post("sp_act_first"),
+            "symp_id" => $this->input->post("symptom_first"),
+            "datetime" => date("Y-m-d H:i:s"),
+            "last_update" => date("Y-m-d H:i:s")
+        );
+
+        $data2 = $this->Patient_model->insert_sp_info($array2);
+
         echo json_encode($result);
     }
 
@@ -578,7 +590,7 @@ class Patient extends CI_Controller {
         header('Content-Type: application/json');
         $sp_info_id = $this->input->post("sp_info_id");
         //$date = $this->input->post("date");
-         $date = $this->convert_date_ad($this->input->post("date"));
+        $date = $this->convert_date_ad($this->input->post("date"));
         $array = array(
             "date" => $date
         );

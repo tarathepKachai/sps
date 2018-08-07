@@ -2,14 +2,14 @@
 <link href="<?php echo base_url("assets/my_css/index_page.css"); ?>" rel="stylesheet" >
 
 <script src="<?php echo base_url("assets/my_js/index_page.js"); ?>" ></script>
-<!--<link type="text/css" href="<?php //echo base_url();                                                                                                                              ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
+<!--<link type="text/css" href="<?php //echo base_url();                                                                                                                                 ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                              ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                 ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                              ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                 ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />	
@@ -255,6 +255,22 @@
                                                         </div>-->
 
 
+                            <hr>
+                            <div class="col">
+                                <label class="label_1">อาการ/โรค ในการเป็นผู้ป่วยจำลอง</label>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <select id="sp_act_first" name="sp_act_list" style="height:35px;width:100%;padding-left:10px" class="input-border"><option value="0">เลือกการกระทำ</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select id="symptom_first" name="symptom_list" style="height:35px;width:100%;padding-left:10px" class="input-border">
+                                            <option value="0">--กรุณาเลือกอาการ/โรค--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <hr>
                             <div class="col">
                                 <label class="label_1">ประวัติการเจ็บป่วย หรือ รับการผ่าตัด</label>
