@@ -91,6 +91,16 @@ class Patient_model extends CI_Model {
 
         return $query->result();
     }
+    
+    public function get_sp_where($where) {
+        $this->db->select('*');
+        $this->db->from('person_info');
+//$this->db->join('prefix', 'person_info.prefix = prefix.id');
+        $this->db->where($where);
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
 
     public function get_sp_data($id) {
         $this->db->select('*');

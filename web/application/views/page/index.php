@@ -261,11 +261,11 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <select id="sp_act_first" name="sp_act_list" style="height:35px;width:100%;padding-left:10px" class="input-border"><option value="0">เลือกการกระทำ</option>
+                                        <select id="sp_act_first" name="sp_act_first" style="height:35px;width:100%;padding-left:10px" class="input-border"><option value="0">เลือกการกระทำ</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <select id="symptom_first" name="symptom_list" style="height:35px;width:100%;padding-left:10px" class="input-border">
+                                        <select id="symptom_first" name="symptom_first" style="height:35px;width:100%;padding-left:10px" class="input-border">
                                             <option value="0">--กรุณาเลือกอาการ/โรค--</option>
                                         </select>
                                     </div>
