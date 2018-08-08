@@ -64,7 +64,7 @@ $(document).ready(function () {
             "dataSrc": function (json) {
                 //Make your callback here.
                 dataReport = json.data;
-                console.log(dataReport);
+                //console.log(dataReport);
                 return json.data;
             }
         }
@@ -153,7 +153,7 @@ $(document).ready(function () {
             "dataSrc": function (json) {
                 //Make your callback here.
                 dataReport = json.data;
-                console.log(dataReport);
+                //console.log(dataReport);
                 return json.data;
             }
         },
@@ -197,7 +197,7 @@ $(document).ready(function () {
             "dataSrc": function (json) {
                 //Make your callback here.
                 dataReport = json.data;
-                console.log(dataReport);
+                //console.log(dataReport);
                 return json.data;
             }
         }, "order": [[0, "desc"]],
@@ -916,7 +916,7 @@ function edit_person_info(id) {
             id: id
         },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             var txt = "";
             var exp1 = "";
             var exp2 = "";
@@ -998,13 +998,13 @@ function edit_sp_info(id) {
             $("#symptom_m").val(data_arr.symp_id);
 
             if (data_arr.evaluation != "" && data_arr.evaluation != null) {
-                console.log("xxx");
+                //console.log("xxx");
                 $('#evaluation_m option[value="' + data_arr.evaluation + '"]').attr("selected", true);
                 $("#evaluation_m").val(data_arr.evaluation);
             } else {
 
                 $("#evaluation_m").val(0);
-                console.log("yyy");
+                //console.log("yyy");
             }
             $('#comment_m').val(data_arr.comment);
         }
@@ -1070,7 +1070,7 @@ function update_sp() {
         data: $("#patient_edit").serialize(),
         success: function (data) {
             $("#edit_modal").modal("hide");
-            console.log(data);
+            //console.log(data);
 
 
             $.confirm({
@@ -1140,7 +1140,7 @@ function get_form_option() {
         url: api_url + "person_status_list",
         type: "get",
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             var str = "";
             var j = "1";
             $.each(data, function (idx, obj) {
@@ -1163,7 +1163,7 @@ function get_form_option() {
         url: api_url + "edu_list",
         type: "get",
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             var str = "";
             var j = "1";
             $.each(data, function (idx, obj) {
@@ -1190,7 +1190,7 @@ function get_form_option() {
         url: api_url + "time_sp_list",
         type: "get",
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             var str = "";
             var j = "1";
             $.each(data, function (idx, obj) {
@@ -1219,7 +1219,7 @@ function get_form_option() {
         url: api_url + "person_status_list",
         type: "get",
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             var str = "";
             $.each(data, function (idx, obj) {
                 str += '<option value="' + obj.id + '" >' + obj.status + '</option>';
@@ -1237,7 +1237,7 @@ function get_form_option() {
         url: api_url + "edu_list",
         type: "get",
         success: function (data) {
-            console.log(data);
+           // console.log(data);
             var str = "";
             $.each(data, function (idx, obj) {
                 str += '<option value="' + obj.id + '" >' + obj.edu_name + '</option>';
@@ -1388,7 +1388,7 @@ function get_form_option() {
         url: api_url + "evaluation_list",
         type: "GET",
         success: function (data) {
-            console.log(data);
+            //console.log(data);
 
             var eva_opt = "";
             var j = "1";
@@ -1427,7 +1427,7 @@ function get_form_option() {
         url: api_url + "evaluation_list",
         type: "GET",
         success: function (data) {
-            console.log(data);
+           // console.log(data);
             var str_eva = [];
 //            $.each(data, function (idx, obj) {
 //                $("#evaluation").append('<option value="' + obj.eva_id + '">' + obj.eva_desc + '</option>');
@@ -1459,7 +1459,7 @@ function get_form_option() {
         url: api_url + "sp_list",
         type: "GET",
         success: function (data) {
-            console.log(data);
+          //  console.log(data);
 
             var i = "1";
             for (i = "1"; i <= "16"; i++) {
@@ -1630,7 +1630,7 @@ function edit_choice(id) {
         },
         success: function (data) {
             $("#choice_data").val(data.data);
-            console.log(data);
+           // console.log(data);
         }
     });
 
@@ -1680,7 +1680,7 @@ function add_choice() {
             type: "POST",
             data: $("#form_manage").serialize(),
             success: function (data) {
-                console.log(data);
+                //console.log(data);
 
 
                 if (data.status === "dup") {
