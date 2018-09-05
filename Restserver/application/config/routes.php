@@ -94,3 +94,4 @@ $route['delete_sp_info'] = 'api/Patient/delete_sp_info';
 $route['update_sp_info'] = 'api/Patient/update_sp_info';
 $route['save_sp_info_list'] = 'api/Patient/save_sp_info_list';
 $route['get_choice'] = 'api/Patient/get_choice';
+$route['check_id_card'] = 'api/Patient/check_id_card';

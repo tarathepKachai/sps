@@ -420,10 +420,10 @@ class Patient extends CI_Controller {
             $where = array(
                 "id_card" => $id_card
             );
-            
+
             $per_id = $this->Patient_model->get_sp_where($where);
             // insert sp_info
-            foreach($per_id as $row){
+            foreach ($per_id as $row) {
                 $per = $row['person_id'];
             }
             $array2 = array(
@@ -431,6 +431,7 @@ class Patient extends CI_Controller {
                 "person_id" => $per,
                 "sp_act_id" => $this->input->post("sp_act_first"),
                 "symp_id" => $this->input->post("symptom_first"),
+                "evaluation" => "0",
                 "datetime" => date("Y-m-d H:i:s"),
                 "last_update" => date("Y-m-d H:i:s")
             );
@@ -914,6 +915,22 @@ class Patient extends CI_Controller {
         $result = $this->Patient_model->Get_choice($id, $choice_data);
 
         echo json_encode($result);
+    }
+
+    public function check_id_card() {
+        header('Content-Type: application/json');
+
+        $id_card = "";
+
+        for ($i = 0; $i < 13; $i++) {
+            $next = $i + 1;
+            $temp = "txtID" . $next;
+            $id_card .= $this->input->post($temp);
+        }
+
+        $check_id_card = $this->Patient_model->check_id_card($id_card);
+
+        echo json_encode($check_id_card);
     }
 
 }
