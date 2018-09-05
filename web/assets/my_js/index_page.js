@@ -774,14 +774,13 @@ function keyup(obj, e, type) {
                     if (tagInput[i].id == 'txtID13')
                         break;
                 } else {
-
                     tagInput[i].focus();
                     return;
                 }
             }
         }
         if (checkID(id)) {
-            console.log(nextObj.id);
+            //console.log(nextObj.id);
             nextObj.focus();
 
         } else {
@@ -1237,7 +1236,7 @@ function get_form_option() {
         url: api_url + "edu_list",
         type: "get",
         success: function (data) {
-           // console.log(data);
+            // console.log(data);
             var str = "";
             $.each(data, function (idx, obj) {
                 str += '<option value="' + obj.id + '" >' + obj.edu_name + '</option>';
@@ -1427,7 +1426,7 @@ function get_form_option() {
         url: api_url + "evaluation_list",
         type: "GET",
         success: function (data) {
-           // console.log(data);
+            // console.log(data);
             var str_eva = [];
 //            $.each(data, function (idx, obj) {
 //                $("#evaluation").append('<option value="' + obj.eva_id + '">' + obj.eva_desc + '</option>');
@@ -1459,7 +1458,7 @@ function get_form_option() {
         url: api_url + "sp_list",
         type: "GET",
         success: function (data) {
-          //  console.log(data);
+            //  console.log(data);
 
             var i = "1";
             for (i = "1"; i <= "16"; i++) {
@@ -1630,7 +1629,7 @@ function edit_choice(id) {
         },
         success: function (data) {
             $("#choice_data").val(data.data);
-           // console.log(data);
+            // console.log(data);
         }
     });
 
@@ -1787,5 +1786,25 @@ function reload_choice_table() {
 function logout() {
 
     window.location.href = client_url + "user/logout";
+
+}
+
+function check_id_card() {
+
+    $.ajax({
+        url: api_url + "check_id_card",
+        type: "POST",
+        data: $("#patient_save").serialize(),
+        success: function (res) {
+            if (res.status === "2") {
+                alert("มีข้อมูลผู้ป่วยจำลองในระบบแล้ว");
+            } else {
+                alert("ยังไม่มีข้อมูลผู้ป่วยจำลองนี้ในระบบ")
+            }
+        },
+        error: function (xx, yy, zz) {
+            alert(xx + " " + yy + " " + zz);
+        }
+    });
 
 }

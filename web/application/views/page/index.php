@@ -133,7 +133,7 @@
                                 <input type="text" name="txtID11" id="txtID11" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" />  
                                 <input type="text" name="txtID12" id="txtID12" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" /> -
                                 <input type="text" name="txtID13" id="txtID13" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" /> 
-
+                                <button type="button" id="id_card_check" onclick="check_id_card()"  >ตรวจสอบ</button>
                             </div>
                             <div class="col">
                                 <label style="margin-top:10px" class="label_1" >น้ำหนัก(กก.) </label>  
